@@ -3,7 +3,7 @@ import {
   ProSkeleton,
 } from '@ant-design/pro-components';
 import { Button, message } from 'antd';
-import React, { useRef, useState ,useCallback} from 'react';
+import React, { useRef, useState ,useCallback,useEffect} from 'react';
 import { useModel } from '@umijs/max';
 import TemplateComponentPrivate from './components/TemplateComponentPrivate';
 import TemplateComponentCommon from '@/components/TemplateComponentCommon';
@@ -24,78 +24,38 @@ export default () => {
   } = useModel('Template.model');
 
   const onClickGet = () => {
-    setTest(test+'a')
-    setHaha({
-
-      ...haha,
-
-
-      b:haha.b+'b'
-    })
+    seta(a+1)
   };
+  //有两个变量，a和b，a初始值0，b初始值100，点击按钮递增a，当a大于10的时候，b才开始递增，在页面上打印出a和b的实时值
 
-  const onClickGetLink = () => {
-    setLink(link*2)
-  };
+  const [a,seta]=useState(0)
 
-  const onClickGetObject = () => {
-    const i = myObject.list
-    i.push(i[i.length-1]+1)
-    setMyObject({
-      ...myObject,
+  const [b,setb] = useState(100)
 
-      list:i
-    })
-  };
-
-  const [test,setTest]=useState('a')
-
-  const [haha,setHaha]=useState({
-    a:1,
-    b:'b',
-    c:[1,2,3],
-    d:{
-      d1:'d1',
-      d2:100,
+  useEffect(()=>{
+    console.log('MyA',a)
+    if(a>10){
+      setb((prev)=>{
+        return prev+1
+      })
     }
-  })
+  },[a])
 
-  const [link,setLink]=useState(1)
 
-  const [myObject,setMyObject]=useState({
-    item:'list',
-    number:10,
-    list:[1,2,3,4,5,6,7],
-    obj:{
-      item1:'ad',
-      item2:'sd'
-    }
-  })
+
   return (
     <div>
       <Button
         type="primary"
         onClick={()=>onClickGet()}
       >
-        {test}
+        {a}
       </Button>
       <Button
         type="primary"
         onClick={()=>onClickGet()}
       >
-        {haha.b}
-      </Button>
-      <Button
-        type="primary"
-        onClick={()=>onClickGetLink()}
-      >
-        {link}
-      </Button>
-      <Button
-        type="primary"
-        onClick={()=>onClickGetObject()}
-      >
-        {myObject.list}
+        {b}
       </Button>
     </div>
   );
