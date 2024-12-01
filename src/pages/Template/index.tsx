@@ -23,90 +23,80 @@ export default () => {
     setComponentParamsPrivate
   } = useModel('Template.model');
 
-  const onClickGet = useCallback(async () => {
-    try {
-      const response = await templateGetApi({...serviceParamsGet});
-      if (response?.code === 200) {
-        message.success('操作成功');
-      } else {
-        message.error(response.msg || '操作失败');
-      }
-    } catch (error) {
-      message.error('系统异常');
-    }
-  },[serviceParamsGet]);
+  const onClickGet = () => {
+    setTest(test+'a')
+    setHaha({
 
-  const onClickPost =  useCallback(async () => {
-    try {
-      const response = await templatePostApi({ ...serviceParamsPost });
-      if (response?.code === 200) {
-        message.success('操作成功');
-      } else {
-        message.error(response.msg || '操作失败');
-      }
-    } catch (error) {
-      message.error('系统异常');
-    }
-  },[serviceParamsPost]);
+      ...haha,
 
-  const onClickPut = useCallback(async () => {
-    try {
-      const response = await templatePutApi({...serviceParamsPut});
-      if (response?.code === 200) {
-        message.success('操作成功');
-      } else {
-        message.error(response.msg || '操作失败');
-      }
-    } catch (error) {
-      message.error('系统异常');
-    }
-  },[serviceParamsPut]);
 
-  const onClickDelete = useCallback(async () => {
-    try {
-      const response =await templateDeleteApi({...serviceParamsDelete});
-      if (response?.code === 200) {
-        message.success('操作成功');
-      } else {
-        message.error(response.msg || '操作失败');
-      }
-    } catch (error) {
-      message.error('系统异常');
-    }
-  },[serviceParamsDelete]);
+      b:haha.b+'b'
+    })
+  };
 
+  const onClickGetLink = () => {
+    setLink(link*2)
+  };
+
+  const onClickGetObject = () => {
+    const i = myObject.list
+    i.push(i[i.length-1]+1)
+    setMyObject({
+      ...myObject,
+
+      list:i
+    })
+  };
+
+  const [test,setTest]=useState('a')
+
+  const [haha,setHaha]=useState({
+    a:1,
+    b:'b',
+    c:[1,2,3],
+    d:{
+      d1:'d1',
+      d2:100,
+    }
+  })
+
+  const [link,setLink]=useState(1)
+
+  const [myObject,setMyObject]=useState({
+    item:'list',
+    number:10,
+    list:[1,2,3,4,5,6,7],
+    obj:{
+      item1:'ad',
+      item2:'sd'
+    }
+  })
   return (
     <div>
       <Button
         type="primary"
         onClick={()=>onClickGet()}
       >
-        onClickGet
+        {test}
       </Button>
       <Button
         type="primary"
-        onClick={()=>onClickPost()}
-        className={styles.gap}
+        onClick={()=>onClickGet()}
       >
-        onClickPost
+        {haha.b}
       </Button>
       <Button
         type="primary"
-        onClick={()=>onClickPut()}
-        className={styles.gap}
+        onClick={()=>onClickGetLink()}
       >
-        onClickPut
+        {link}
       </Button>
       <Button
         type="primary"
-        onClick={()=>onClickDelete()}
-        className={styles.gap}
+        onClick={()=>onClickGetObject()}
       >
-        onClickDelete
+        {myObject.list}
       </Button>
-      <TemplateComponentPrivate />
-      <TemplateComponentCommon />
-      <ProSkeleton type="list" />
     </div>
   );
 };
