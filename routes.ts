@@ -54,6 +54,12 @@ export const routes = [
     layout: false,
   },
   {
+    name: '大屏项目',
+    path: '/bigscreen',
+    component: './BigScreen',
+    layout: false,
+  },
+  {
     name: '404',
     path:'/*',
     component: './404',

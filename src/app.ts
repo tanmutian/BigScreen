@@ -22,11 +22,11 @@ export const layout = () => {
   };
 };
 
-if ((!localStorage.getItem('token')) && (!location.href.includes('/user/login'))) {
-  localStorage.removeItem('userInfo');
-  localStorage.removeItem('currentUserInfo');
-  goLogin();
-}
+// if ((!localStorage.getItem('token')) && (!location.href.includes('/user/login'))) {
+//   localStorage.removeItem('userInfo');
+//   localStorage.removeItem('currentUserInfo');
+//   goLogin();
+// }
 
 export const request: RequestConfig = {
   errorConfig: {
