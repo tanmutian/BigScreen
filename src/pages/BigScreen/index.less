@@ -87,8 +87,51 @@
   float:left;
   margin-left:30px;
   margin-top:15px;
-  background:red;
-  font-size:75px;
+  background:no-repeat url("../../assets/bigScreen/pic/background.png");
+
+  .device_img{
+    float:left;
+    margin-top:20px;
+    margin-left:30px;
+  }
+
+  .device_text_small{
+    float:left;
+    margin-top:50px;
+    margin-left:60px;
+    font-size:15px;
+    color:white;
+  }
+
+  .device_text_large{
+    float:left;
+    margin-top:40px;
+    margin-left:20px;
+    font-size:30px;
+    font-weight:bold;
+    color:white;
+  }
+
+  .device_text_unit{
+    float:left;
+    margin-top:50px;
+    margin-left:20px;
+    font-size:15px;
+    color:white;
+  }
+
+  .device_table{
+    float:left;
+    :global{
+      .ant-table-wrapper .ant-table {
+        background:#fff9f900;
+      }
+
+      .ant-table-wrapper .ant-table-thead .ant-table-cell{
+        background:#fafafa00 !important;
+      }
+    }
+  }
 }
 
 .right_side{
@@ -130,7 +173,7 @@
 .company_title{
   float:left;
   height:25px;
-  width:400px;
+  width:300px;
   margin-top:20px;
   font-size:15px;
   font-weight:bold;
@@ -140,6 +183,34 @@
   .company_subtitle{
     float:left;
     margin-left:35px;
+  }
+}
+
+.date{
+  float:left;
+  height:20px;
+  width:90px;
+  margin-top:20px;
+
+  .date_specific{
+    float:left;
+    height:20px;
+    width:30px;
+    text-align:center;
+    line-height:20px;
+    font-size:10px;
+    color:white;
+  }
+
+  .date_select{
+    float:left;
+    height:20px;
+    width:30px;
+    text-align:center;
+    line-height:20px;
+    font-size:10px;
+    color:white;
+    background:no-repeat url("../../assets/bigScreen/pic/click_background.png");
   }
 }
 
