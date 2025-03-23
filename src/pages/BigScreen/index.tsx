@@ -160,7 +160,7 @@ export default () => {
           </div>
 
           <div className={styles.device_table}>
-            <Table columns={columns} dataSource={data} pagination={false}/>
+            <Table columns={columns} dataSource={data} pagination={false} size='small' />
           </div>
           
         </div>

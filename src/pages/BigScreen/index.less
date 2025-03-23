@@ -122,6 +122,8 @@
 
   .device_table{
     float:left;
+    width:390px;
+    margin-left:3px;
     :global{
       .ant-table-wrapper .ant-table {
         background:#fff9f900;
@@ -129,6 +131,27 @@
 
       .ant-table-wrapper .ant-table-thead .ant-table-cell{
         background:#fafafa00 !important;
+      }
+
+      .ant-table-tbody .ant-table-cell{
+        padding:4px 8px !important;
+      }
+
+      .ant-table-tbody >tr >td{
+        border-top: 0px !important;
+      }
+
+      .ant-table-tbody >tr:last-child>td{
+        border-bottom: 0px !important;
+      }
+
+      .ant-table-thead .ant-table-cell{
+        padding:4px 8px !important;
+        border-bottom: 0px;
+      }
+
+      .ant-table-thead .ant-table-cell::before{
+        width:0px !important;
       }
     }
   }
