@@ -32,40 +32,50 @@ export default () => {
 
   const columns = [
     {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-      render: (text) => <a>{text}</a>,
+      title: "状态名称",
+      dataIndex: "status_name",
+      key: "status_name",
+      render: (value,record,index) => {
+        console.log(value,record,index)
+        return<div>
+        {value}
+        </div>
+        },
     },
     {
-      title: "Age",
-      dataIndex: "age",
-      key: "age",
-    },
+      title: "已完成",
+      dataIndex: "complete",
+      key: "complete",
+    },{
+      title: "待完成",
+      dataIndex: "wait_complete",
+      key: "wait_complete",
+    },{
+      title: "总计",
+      dataIndex: "total",
+      key: "total",
+    }
   ];
   
   const data = [
     {
-      key: "1",
-      name: "John Brown",
-      age: 32,
-      address: "New York No. 1 Lake Park",
-      tags: ["nice", "developer"],
+      status_name: "点检",
+      complete: 0,
+      wait_complete: 0,
+      total: 0,
     },
     {
-      key: "2",
-      name: "Jim Green",
-      age: 42,
-      address: "London No. 1 Lake Park",
-      tags: ["loser"],
+      status_name: "保养",
+      complete: 0,
+      wait_complete: 0,
+      total: 0,
     },
     {
-      key: "3",
-      name: "Joe Black",
-      age: 32,
-      address: "Sydney No. 1 Lake Park",
-      tags: ["cool", "teacher"],
-    },
+      status_name: "维修",
+      complete: 0,
+      wait_complete: 0,
+      total: 0,
+    }
   ];
 
   return (
