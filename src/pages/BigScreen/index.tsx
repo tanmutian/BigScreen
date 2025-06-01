@@ -14,6 +14,7 @@ import company_introduction from '@/assets/bigScreen/pic/company_introduction.pn
 import introduce2 from '@/assets/bigScreen/pic/introduce2.png'
 import user_number from '@/assets/bigScreen/pic/user_number.png'
 import device_stat from '@/assets/bigScreen/pic/device_status.png'
+import revenue_img from '@/assets/bigScreen/pic/revenue.png'
 //https://appstore.jiuxiniot.com/xy-3d-web/#/home
 
 export default () => {
@@ -37,23 +38,41 @@ export default () => {
       key: "status_name",
       render: (value,record,index) => {
         console.log(value,record,index)
-        return<div>
-        {value}
+        return<div className={styles.status_name}>
+          {value}
         </div>
-        },
+      },
     },
     {
       title: "已完成",
       dataIndex: "complete",
       key: "complete",
+      render: (value,record,index) => {
+        console.log(value,record,index)
+        return<div className={styles.table_header_complete}>
+          {value}
+        </div>
+      },
     },{
       title: "待完成",
       dataIndex: "wait_complete",
       key: "wait_complete",
+      render: (value,record,index) => {
+        console.log(value,record,index)
+        return<div className={styles.table_header_incomplete}>
+          {value}
+        </div>
+      },
     },{
       title: "总计",
       dataIndex: "total",
       key: "total",
+      render: (value,record,index) => {
+        console.log(value,record,index)
+        return<div className={styles.table_header_total}>
+          {value}
+        </div>
+      },
     }
   ];
   
@@ -178,8 +197,30 @@ export default () => {
 
       <div className={styles.right_side}>
         <div className={styles.revenue}>
-          工厂营收
+          <div className={styles.company_title}>
+            <div className={styles.company_subtitle}>
+            工厂营收
+            </div>
+          </div>
+          
+          <div className={styles.date}>
+              <div className={styles.date_select}>
+                日
+              </div>
+              <div className={styles.date_specific}>
+                月
+              </div>
+              <div className={styles.date_specific}>
+                年
+              </div>
+          </div>
+
+          <div className={styles.revenue_img}>
+            0%
+          </div>
         </div>
+
+
         <div className={styles.plan}>
           计划产值
         </div>
