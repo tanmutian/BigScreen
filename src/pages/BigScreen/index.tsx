@@ -15,6 +15,9 @@ import introduce2 from '@/assets/bigScreen/pic/introduce2.png'
 import user_number from '@/assets/bigScreen/pic/user_number.png'
 import device_stat from '@/assets/bigScreen/pic/device_status.png'
 import revenue_img from '@/assets/bigScreen/pic/revenue.png'
+import plan_blue from '@/assets/bigScreen/pic/plan_blue.png'
+import plan_green from '@/assets/bigScreen/pic/plan_green.png'
+import * as echarts from 'echarts';
 //https://appstore.jiuxiniot.com/xy-3d-web/#/home
 
 export default () => {
@@ -30,6 +33,30 @@ export default () => {
     componentParamsPrivate,
     setComponentParamsPrivate
   } = useModel('BigScreen.model');
+
+  useEffect(()=>{
+    let chartDom = document.getElementById('main');
+    let myChart = echarts.init(chartDom);
+    let option;
+
+    option = {
+      xAxis: {
+        type: 'category',
+        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+      },
+      yAxis: {
+        type: 'value'
+      },
+      series: [
+        {
+          data: [120, 200, 150, 80, 70, 110, 130],
+          type: 'bar'
+        }
+      ]
+    };
+
+    option && myChart.setOption(option);
+  },[])
 
   const columns = [
     {
@@ -218,11 +245,90 @@ export default () => {
           <div className={styles.revenue_img}>
             0%
           </div>
+
+          <div className={styles.revenue_blue}>
+            <div className={styles.blue_amount}>
+              0.00
+            </div>
+            <div className={styles.blue_unit}>
+              /万元
+            </div>
+            <div className={styles.dash_line}>
+            </div>
+            <div className={styles.blue_name}>
+              工厂营收
+            </div>
+          </div>
+
+          <div className={styles.revenue_green}>
+            <div className={styles.green_amount}>
+              0.00
+            </div>
+            <div className={styles.green_unit}>
+              /万元
+            </div>
+            <div className={styles.dash_line}>
+            </div>
+            <div className={styles.green_name}>
+              工厂回款
+            </div>
+          </div>
         </div>
 
 
         <div className={styles.plan}>
-          计划产值
+          <div className={styles.company_title}>
+            <div className={styles.company_subtitle}>
+            工厂营收
+            </div>
+          </div>
+          
+          <div className={styles.date}>
+              <div className={styles.date_select}>
+                日
+              </div>
+              <div className={styles.date_specific}>
+                月
+              </div>
+              <div className={styles.date_specific}>
+                年
+              </div>
+          </div>
+
+          <div className={styles.values}>
+            <div className={styles.values_plan}>
+                <div className={styles.values_img}>
+                  <img src={plan_blue}>
+                  </img>
+                </div>
+                <div className={styles.values_text}>
+                  <div className={styles.text_up}>
+                    计划产值
+                  </div>
+                  <div className={styles.text_down}>
+                    1222
+                  </div>
+                </div>
+            </div>
+
+            <div className={styles.values_achieved}>
+                <div className={styles.values_img}>
+                  <img src={plan_green}>
+                  </img>
+                </div>
+                <div className={styles.values_text}>
+                  <div className={styles.text_up}>
+                    实际产值
+                  </div>
+                  <div className={styles.text_down}>
+                    0.00
+                  </div>
+                </div>
+            </div>
+          </div>
+
+          <div id="main" className={styles.chart}>
+          </div>
         </div>
         <div className={styles.capacity}>
           车间产值
