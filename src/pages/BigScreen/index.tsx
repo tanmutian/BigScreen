@@ -18,6 +18,8 @@ import revenue_img from '@/assets/bigScreen/pic/revenue.png'
 import plan_blue from '@/assets/bigScreen/pic/plan_blue.png'
 import plan_green from '@/assets/bigScreen/pic/plan_green.png'
 import * as echarts from 'echarts';
+import BarChart from './components/barChart'
+import BarChart2 from './components/Barchart2'
 //https://appstore.jiuxiniot.com/xy-3d-web/#/home
 
 export default () => {
@@ -34,29 +36,7 @@ export default () => {
     setComponentParamsPrivate
   } = useModel('BigScreen.model');
 
-  useEffect(()=>{
-    let chartDom = document.getElementById('main');
-    let myChart = echarts.init(chartDom);
-    let option;
-
-    option = {
-      xAxis: {
-        type: 'category',
-        data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-      },
-      yAxis: {
-        type: 'value'
-      },
-      series: [
-        {
-          data: [120, 200, 150, 80, 70, 110, 130],
-          type: 'bar'
-        }
-      ]
-    };
-
-    option && myChart.setOption(option);
-  },[])
+  
 
   const columns = [
     {
@@ -126,6 +106,11 @@ export default () => {
 
   return (
     <div className={styles.global}>
+      <div className={styles.head_title}>
+        <div className={styles.title_text}>
+          新云工艺品可视化大屏
+        </div>
+      </div>
       <div className={styles.left_side}>
         <div className={styles.company_information}>
 
@@ -327,11 +312,31 @@ export default () => {
             </div>
           </div>
 
-          <div id="main" className={styles.chart}>
-          </div>
+          {/* <div id="main" className={styles.chart}>
+          </div> */}
+          <BarChart>
+          </BarChart>
         </div>
         <div className={styles.capacity}>
-          车间产值
+          <div className={styles.company_title}>
+            <div className={styles.company_subtitle}>
+              车间产值
+            </div>
+          </div>
+          
+          <div className={styles.date}>
+              <div className={styles.date_select}>
+                日
+              </div>
+              <div className={styles.date_specific}>
+                月
+              </div>
+              <div className={styles.date_specific}>
+                年
+              </div>
+          </div>
+          <BarChart2>
+          </BarChart2>
         </div>
       </div>
     </div>

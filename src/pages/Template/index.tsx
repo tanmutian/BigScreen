@@ -45,18 +45,16 @@ export default () => {
 
   return (
     <div>
-      <Button
-        type="primary"
-        onClick={()=>onClickGet()}
-      >
-        {a}
-      </Button>
-      <Button
-        type="primary"
-        onClick={()=>onClickGet()}
-      >
-        {b}
-      </Button>
+      <div className={styles.test}>
+        <div className={styles.test1}>
+        </div>
+        <div className={styles.test1}>
+          <div className={styles.test2}>
+          </div>
+        </div>
+
+        
+      </div>
     </div>
   );
 };
