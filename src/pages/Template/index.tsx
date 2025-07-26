@@ -20,41 +20,44 @@ export default () => {
     serviceParamsDelete,
     setServiceParamsDelete,
     componentParamsPrivate,
-    setComponentParamsPrivate
+    setComponentParamsPrivate,
+    a,setA,b,setB
   } = useModel('Template.model');
 
-  const onClickGet = () => {
-    seta(a+1)
-  };
+  
   //有两个变量，a和b，a初始值0，b初始值100，点击按钮递增a，当a大于10的时候，b才开始递增，在页面上打印出a和b的实时值
 
-  const [a,seta]=useState(0)
 
-  const [b,setb] = useState(100)
+
+  const onClickGet = useCallback(
+    () => {
+      setA(a+1)
+    },[a, setA]
+  );
 
   useEffect(()=>{
     console.log('MyA',a)
     if(a>10){
-      setb((prev)=>{
+      setB((prev)=>{
         return prev+1
       })
     }
-  },[a])
-
-
+  },[a, setB])
 
   return (
     <div>
-      <div className={styles.test}>
-        <div className={styles.test1}>
-        </div>
-        <div className={styles.test1}>
-          <div className={styles.test2}>
-          </div>
-        </div>
-
-        
-      </div>
+      <Button
+        type="primary"
+        onClick={()=>onClickGet()}
+      >
+        {a}
+      </Button>
+      <Button
+        type="primary"
+        onClick={()=>onClickGet()}
+      >
+        {b}
+      </Button>
     </div>
   );
 };

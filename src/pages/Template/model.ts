@@ -18,6 +18,9 @@ export default () => {
   const [componentParamsPrivate, setComponentParamsPrivate] = useState<any>({
     test:1,
   });
+  const [a,setA]=useState(0)
+  
+  const [b,setB] = useState(100)
   return {
     serviceParamsGet,
     setServiceParamsGet,
@@ -28,6 +31,7 @@ export default () => {
     serviceParamsDelete,
     setServiceParamsDelete,
     componentParamsPrivate,
-    setComponentParamsPrivate
+    setComponentParamsPrivate,
+    a,setA,b,setB
   };
 };
