@@ -33,10 +33,169 @@ export default () => {
     serviceParamsDelete,
     setServiceParamsDelete,
     componentParamsPrivate,
-    setComponentParamsPrivate
+    setComponentParamsPrivate,
+    factoryRevenue,
+    setFactoryRevenue,
+    capacity,
+    setCapacity,
+    plan,
+    setPlan,
+    device,
+    setDevice,
   } = useModel('BigScreen.model');
 
+  const getDateRevenue = useCallback(
+    () => {
+      setFactoryRevenue({revenue:8,refund:5})
+    },[setFactoryRevenue]
+  )
+
+  const getMonthRevenue = useCallback(
+    () => {
+      setFactoryRevenue({revenue:120,refund:80})
+    },[setFactoryRevenue]
+  )
+
+  const getYearRevenue = useCallback(
+    () => {
+      setFactoryRevenue({revenue:800,refund:680})
+    },[setFactoryRevenue]
+  )
   
+  const getDateCapacity = useCallback(
+    () => {
+      setCapacity({dataArray:[100,200,300,400]})
+    },[setCapacity]
+  )
+
+  const getMonthCapacity = useCallback(
+    () => {
+      setCapacity({dataArray:[300,500,700,900]})
+    },[setCapacity]
+  )
+
+  const getYearCapacity = useCallback(
+    () => {
+      setCapacity({dataArray:[1000,1500,2000,2500]})
+    },[setCapacity]
+  )
+
+    const getDatePlan = useCallback(
+    () => {
+      setPlan({
+        plan_value:12,
+        achieved_value:15,
+        x:['2025-07-01','2025-07-02','2025-07-03','2025-07-04','2025-07-05','2025-07-06','2025-07-07'],
+        data1:[1,7,5,8,9,4,5],
+      })
+    },[setPlan]
+  )
+
+  const getMonthPlan = useCallback(
+    () => {
+      setPlan({
+        plan_value:122,
+        achieved_value:155,
+        x:['01','02','03','04','05','06'],
+        data1:[15,85,45,68,92,150],
+      })
+    },[setPlan]
+  )
+
+  const getYearPlan = useCallback(
+    () => {
+      setPlan({
+        plan_value:1222,
+        achieved_value:1555,
+        x:['2019','2020','2021','2022','2023','2024','2025'],
+        data1:[120,150,167,121,142,180,158],
+      })
+    },[setPlan]
+  )
+
+  const getDateDevice = useCallback(
+    () => {
+      setDevice({
+        total:150,
+        data:[
+          {
+            status_name: "点检",
+            complete: 3,
+            wait_complete: 5,
+            total: 8,
+          },
+          {
+            status_name: "保养",
+            complete: 4,
+            wait_complete: 1,
+            total: 5,
+          },
+          {
+            status_name: "维修",
+            complete: 7,
+            wait_complete: 0,
+            total: 7,
+          }
+        ]
+      })
+    },[setDevice]
+  )
+
+  const getMonthDevice = useCallback(
+    () => {
+      setDevice({
+        total:150,
+        data:[
+          {
+            status_name: "点检",
+            complete: 17,
+            wait_complete: 5,
+            total: 22,
+          },
+          {
+            status_name: "保养",
+            complete: 8,
+            wait_complete: 5,
+            total: 13,
+          },
+          {
+            status_name: "维修",
+            complete: 12,
+            wait_complete: 2,
+            total: 14,
+          }
+        ]
+      })
+    },[setDevice]
+  )
+
+  const getYearDevice = useCallback(
+    () => {
+      setDevice({
+        total:150,
+        data:[
+          {
+            status_name: "点检",
+            complete: 30,
+            wait_complete: 6,
+            total: 36,
+          },
+          {
+            status_name: "保养",
+            complete: 38,
+            wait_complete: 10,
+            total: 48,
+          },
+          {
+            status_name: "维修",
+            complete: 50,
+            wait_complete: 2,
+            total: 52,
+          }
+        ]
+      })
+    },[setDevice]
+  )
 
   const columns = [
     {
@@ -83,26 +242,6 @@ export default () => {
     }
   ];
   
-  const data = [
-    {
-      status_name: "点检",
-      complete: 0,
-      wait_complete: 0,
-      total: 0,
-    },
-    {
-      status_name: "保养",
-      complete: 0,
-      wait_complete: 0,
-      total: 0,
-    },
-    {
-      status_name: "维修",
-      complete: 0,
-      wait_complete: 0,
-      total: 0,
-    }
-  ];
 
   return (
     <div className={styles.global}>
@@ -174,13 +313,13 @@ export default () => {
             </div>
           </div>
           <div className={styles.date}>
-              <div className={styles.date_select}>
+              <div className={styles.date_specific} onClick={()=> getDateDevice()}>
                 日
               </div>
-              <div className={styles.date_specific}>
+              <div className={styles.date_specific} onClick={()=> getMonthDevice()}>
                 月
               </div>
-              <div className={styles.date_specific}>
+              <div className={styles.date_specific} onClick={()=> getYearDevice()}>
                 年
               </div>
           </div>
@@ -194,14 +333,14 @@ export default () => {
             设备总数
           </div>
           <div className={styles.device_text_large}>
-            0
+            {device.total}
           </div>
           <div className={styles.device_text_unit}>
             台
           </div>
 
           <div className={styles.device_table}>
-            <Table columns={columns} dataSource={data} pagination={false} size='small' />
+            <Table columns={columns} dataSource={device.data} pagination={false} size='small' />
           </div>
           
         </div>
@@ -216,13 +355,13 @@ export default () => {
           </div>
           
           <div className={styles.date}>
-              <div className={styles.date_select}>
+              <div className={styles.date_specific} onClick={()=>getDateRevenue()}>
                 日
               </div>
-              <div className={styles.date_specific}>
+              <div className={styles.date_specific} onClick={()=>getMonthRevenue()}>
                 月
               </div>
-              <div className={styles.date_specific}>
+              <div className={styles.date_specific} onClick={()=> getYearRevenue()}>
                 年
               </div>
           </div>
@@ -233,7 +372,7 @@ export default () => {
 
           <div className={styles.revenue_blue}>
             <div className={styles.blue_amount}>
-              0.00
+              {factoryRevenue.revenue}
             </div>
             <div className={styles.blue_unit}>
               /万元
@@ -247,7 +386,7 @@ export default () => {
 
           <div className={styles.revenue_green}>
             <div className={styles.green_amount}>
-              0.00
+              {factoryRevenue.refund}
             </div>
             <div className={styles.green_unit}>
               /万元
@@ -264,18 +403,21 @@ export default () => {
         <div className={styles.plan}>
           <div className={styles.company_title}>
             <div className={styles.company_subtitle}>
-            工厂营收
+              计划产值
+            </div>
+            <div className={styles.title_unit}>
+              (单位:万元)
             </div>
           </div>
           
           <div className={styles.date}>
-              <div className={styles.date_select}>
+              <div className={styles.date_specific} onClick={()=>getDatePlan()}>
                 日
               </div>
-              <div className={styles.date_specific}>
+              <div className={styles.date_specific} onClick={()=>getMonthPlan()}>
                 月
               </div>
-              <div className={styles.date_specific}>
+              <div className={styles.date_specific} onClick={()=>getYearPlan()}>
                 年
               </div>
           </div>
@@ -291,7 +433,7 @@ export default () => {
                     计划产值
                   </div>
                   <div className={styles.text_down}>
-                    1222
+                    {plan.plan_value}
                   </div>
                 </div>
             </div>
@@ -306,7 +448,7 @@ export default () => {
                     实际产值
                   </div>
                   <div className={styles.text_down}>
-                    0.00
+                    {plan.achieved_value}
                   </div>
                 </div>
             </div>
@@ -322,16 +464,19 @@ export default () => {
             <div className={styles.company_subtitle}>
               车间产值
             </div>
+            <div className={styles.title_unit}>
+              (单位:万元)
+            </div>
           </div>
           
           <div className={styles.date}>
-              <div className={styles.date_select}>
+              <div className={styles.date_specific} onClick={()=>getDateCapacity()}>
                 日
               </div>
-              <div className={styles.date_specific}>
+              <div className={styles.date_specific} onClick={()=>getMonthCapacity()}>
                 月
               </div>
-              <div className={styles.date_specific}>
+              <div className={styles.date_specific} onClick={()=>getYearCapacity()}>
                 年
               </div>
           </div>
