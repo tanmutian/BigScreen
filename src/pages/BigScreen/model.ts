@@ -54,7 +54,6 @@ export default () => {
       }
     ]
   })
-  const [factoryRevenueCurrentClick,setFactoryRevenueCurrentClick] = useState<any>("day")
 
   return {
     serviceParamsGet,
@@ -75,7 +74,5 @@ export default () => {
     setPlan,
     device,
     setDevice,
-    factoryRevenueCurrentClick,
-    setFactoryRevenueCurrentClick,
   };
 };

@@ -43,29 +43,24 @@ export default () => {
     setPlan,
     device,
     setDevice,
-    factoryRevenueCurrentClick,
-    setFactoryRevenueCurrentClick,
   } = useModel('BigScreen.model');
 
   const getDateRevenue = useCallback(
     () => {
-      setFactoryRevenueCurrentClick("day")
       setFactoryRevenue({revenue:8,refund:5})
-    },[setFactoryRevenue, setFactoryRevenueCurrentClick]
+    },[setFactoryRevenue]
   )
 
   const getMonthRevenue = useCallback(
     () => {
-      setFactoryRevenueCurrentClick("month")
       setFactoryRevenue({revenue:120,refund:80})
-    },[setFactoryRevenue, setFactoryRevenueCurrentClick]
+    },[setFactoryRevenue]
   )
 
   const getYearRevenue = useCallback(
     () => {
-      setFactoryRevenueCurrentClick("year")
       setFactoryRevenue({revenue:800,refund:680})
-    },[setFactoryRevenue, setFactoryRevenueCurrentClick]
+    },[setFactoryRevenue]
   )
   
   const getDateCapacity = useCallback(
@@ -259,11 +254,14 @@ export default () => {
       <div className={styles.left_side}>
         <div className={styles.company_information}>
 
-          <div className={styles.company_title}>
-            <div className={styles.company_subtitle}>
-              公司介绍
-            </div>
-          </div>
+          <TitleBar 
+            getDate={null} 
+            getMonth={null} 
+            getYear={null}
+            title = "公司介绍"
+            unit = ""
+          >
+          </TitleBar>
           
           <div className={styles.company_carousel}>
             <Carousel autoplay dots={false}>
@@ -316,22 +314,6 @@ export default () => {
         </div>
 
         <div className={styles.device_status}>
-          {/* <div className={styles.company_title}>
-            <div className={styles.company_subtitle}>
-              设备状态
-            </div>
-          </div>
-          <div className={styles.date}>
-              <div className={styles.date_specific} onClick={()=> getDateDevice()}>
-                日
-              </div>
-              <div className={styles.date_specific} onClick={()=> getMonthDevice()}>
-                月
-              </div>
-              <div className={styles.date_specific} onClick={()=> getYearDevice()}>
-                年
-              </div>
-          </div> */}
           <TitleBar 
             getDate={()=> getDateDevice()} 
             getMonth={()=> getMonthDevice()} 
@@ -365,23 +347,6 @@ export default () => {
 
       <div className={styles.right_side}>
         <div className={styles.revenue}>
-          {/* <div className={styles.company_title}>
-            <div className={styles.company_subtitle}>
-            工厂营收
-            </div>
-          </div>
-          
-          <div className={styles.date}>
-              <div className={`${styles.date_specific} ${factoryRevenueCurrentClick === "day"? styles.clickNow:""}`} onClick={()=>getDateRevenue()}>
-                日
-              </div>
-              <div className={`${styles.date_specific} ${factoryRevenueCurrentClick === "month"? styles.clickNow:""}`} onClick={()=>getMonthRevenue()}>
-                月
-              </div>
-              <div className={`${styles.date_specific} ${factoryRevenueCurrentClick === "year"? styles.clickNow:""}`} onClick={()=> getYearRevenue()}>
-                年
-              </div>
-          </div> */}
           <TitleBar 
             getDate={()=> getDateRevenue()} 
             getMonth={()=> getMonthRevenue()} 
@@ -426,26 +391,6 @@ export default () => {
 
 
         <div className={styles.plan}>
-          {/* <div className={styles.company_title}>
-            <div className={styles.company_subtitle}>
-              计划产值
-            </div>
-            <div className={styles.title_unit}>
-              (单位:万元)
-            </div>
-          </div>
-          
-          <div className={styles.date}>
-              <div className={styles.date_specific} onClick={()=>getDatePlan()}>
-                日
-              </div>
-              <div className={styles.date_specific} onClick={()=>getMonthPlan()}>
-                月
-              </div>
-              <div className={styles.date_specific} onClick={()=>getYearPlan()}>
-                年
-              </div>
-          </div> */}
           <TitleBar 
             getDate={()=> getDatePlan()} 
             getMonth={()=> getMonthPlan()} 
@@ -493,26 +438,6 @@ export default () => {
           </BarChart>
         </div>
         <div className={styles.capacity}>
-          {/* <div className={styles.company_title}>
-            <div className={styles.company_subtitle}>
-              车间产值
-            </div>
-            <div className={styles.title_unit}>
-              (单位:万元)
-            </div>
-          </div>
-          
-          <div className={styles.date}>
-              <div className={styles.date_specific} onClick={()=>getDateCapacity()}>
-                日
-              </div>
-              <div className={styles.date_specific} onClick={()=>getMonthCapacity()}>
-                月
-              </div>
-              <div className={styles.date_specific} onClick={()=>getYearCapacity()}>
-                年
-              </div>
-          </div> */}
           <TitleBar 
             getDate={()=> getDateCapacity()} 
             getMonth={()=> getMonthCapacity()} 
