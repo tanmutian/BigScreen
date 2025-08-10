@@ -20,6 +20,7 @@ import plan_green from '@/assets/bigScreen/pic/plan_green.png'
 import * as echarts from 'echarts';
 import BarChart from './components/barChart'
 import BarChart2 from './components/Barchart2'
+import TitleBar from '@/components/TitleBar';
 //https://appstore.jiuxiniot.com/xy-3d-web/#/home
 
 export default () => {
@@ -42,24 +43,29 @@ export default () => {
     setPlan,
     device,
     setDevice,
+    factoryRevenueCurrentClick,
+    setFactoryRevenueCurrentClick,
   } = useModel('BigScreen.model');
 
   const getDateRevenue = useCallback(
     () => {
+      setFactoryRevenueCurrentClick("day")
       setFactoryRevenue({revenue:8,refund:5})
-    },[setFactoryRevenue]
+    },[setFactoryRevenue, setFactoryRevenueCurrentClick]
   )
 
   const getMonthRevenue = useCallback(
     () => {
+      setFactoryRevenueCurrentClick("month")
       setFactoryRevenue({revenue:120,refund:80})
-    },[setFactoryRevenue]
+    },[setFactoryRevenue, setFactoryRevenueCurrentClick]
   )
 
   const getYearRevenue = useCallback(
     () => {
+      setFactoryRevenueCurrentClick("year")
       setFactoryRevenue({revenue:800,refund:680})
-    },[setFactoryRevenue]
+    },[setFactoryRevenue, setFactoryRevenueCurrentClick]
   )
   
   const getDateCapacity = useCallback(
@@ -284,11 +290,14 @@ export default () => {
         </div>
 
         <div className={styles.user_number}>
-          <div className={styles.company_title}>
-            <div className={styles.company_subtitle}>
-              用户数量
-            </div>
-          </div>
+          <TitleBar 
+            getDate={null} 
+            getMonth={null} 
+            getYear={null}
+            title = "用户数量"
+            unit = ""
+          >
+          </TitleBar>
 
           <div className={styles.user_img}>
             <img src={user_number}>
@@ -307,7 +316,7 @@ export default () => {
         </div>
 
         <div className={styles.device_status}>
-          <div className={styles.company_title}>
+          {/* <div className={styles.company_title}>
             <div className={styles.company_subtitle}>
               设备状态
             </div>
@@ -322,7 +331,15 @@ export default () => {
               <div className={styles.date_specific} onClick={()=> getYearDevice()}>
                 年
               </div>
-          </div>
+          </div> */}
+          <TitleBar 
+            getDate={()=> getDateDevice()} 
+            getMonth={()=> getMonthDevice()} 
+            getYear={()=> getYearDevice()}
+            title = "设备状态"
+            unit = ""
+          >
+          </TitleBar>
 
           <div className={styles.device_img}>
             <img src={device_stat}>
@@ -348,23 +365,31 @@ export default () => {
 
       <div className={styles.right_side}>
         <div className={styles.revenue}>
-          <div className={styles.company_title}>
+          {/* <div className={styles.company_title}>
             <div className={styles.company_subtitle}>
             工厂营收
             </div>
           </div>
           
           <div className={styles.date}>
-              <div className={styles.date_specific} onClick={()=>getDateRevenue()}>
+              <div className={`${styles.date_specific} ${factoryRevenueCurrentClick === "day"? styles.clickNow:""}`} onClick={()=>getDateRevenue()}>
                 日
               </div>
-              <div className={styles.date_specific} onClick={()=>getMonthRevenue()}>
+              <div className={`${styles.date_specific} ${factoryRevenueCurrentClick === "month"? styles.clickNow:""}`} onClick={()=>getMonthRevenue()}>
                 月
               </div>
-              <div className={styles.date_specific} onClick={()=> getYearRevenue()}>
+              <div className={`${styles.date_specific} ${factoryRevenueCurrentClick === "year"? styles.clickNow:""}`} onClick={()=> getYearRevenue()}>
                 年
               </div>
-          </div>
+          </div> */}
+          <TitleBar 
+            getDate={()=> getDateRevenue()} 
+            getMonth={()=> getMonthRevenue()} 
+            getYear={()=> getYearRevenue()}
+            title = "工厂营收"
+            unit = ""
+          >
+          </TitleBar>
 
           <div className={styles.revenue_img}>
             0%
@@ -401,7 +426,7 @@ export default () => {
 
 
         <div className={styles.plan}>
-          <div className={styles.company_title}>
+          {/* <div className={styles.company_title}>
             <div className={styles.company_subtitle}>
               计划产值
             </div>
@@ -420,7 +445,15 @@ export default () => {
               <div className={styles.date_specific} onClick={()=>getYearPlan()}>
                 年
               </div>
-          </div>
+          </div> */}
+          <TitleBar 
+            getDate={()=> getDatePlan()} 
+            getMonth={()=> getMonthPlan()} 
+            getYear={()=> getYearPlan()}
+            title = "计划产值"
+            unit = "（单位万元）"
+          >
+          </TitleBar>
 
           <div className={styles.values}>
             <div className={styles.values_plan}>
@@ -460,7 +493,7 @@ export default () => {
           </BarChart>
         </div>
         <div className={styles.capacity}>
-          <div className={styles.company_title}>
+          {/* <div className={styles.company_title}>
             <div className={styles.company_subtitle}>
               车间产值
             </div>
@@ -479,7 +512,14 @@ export default () => {
               <div className={styles.date_specific} onClick={()=>getYearCapacity()}>
                 年
               </div>
-          </div>
+          </div> */}
+          <TitleBar 
+            getDate={()=> getDateCapacity()} 
+            getMonth={()=> getMonthCapacity()} 
+            getYear={()=> getYearCapacity()}
+            title = "车间产值"
+            unit = "（单位万元）"
+          ></TitleBar>
           <BarChart2>
           </BarChart2>
         </div>
