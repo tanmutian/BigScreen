@@ -1,3 +1,5 @@
+import { Component } from "react";
+
 //采用一级平铺定义路由，禁止嵌套定义路由
 export const routes = [
   {
@@ -57,6 +59,12 @@ export const routes = [
     name: '大屏项目',
     path: '/bigscreen',
     component: './BigScreen',
+    layout: false,
+  },
+  {
+    name:'ThreeJS',
+    path:'/testThreeJS',
+    component: './TemplateThreeJS',
     layout: false,
   },
   {
