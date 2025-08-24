@@ -7,6 +7,7 @@
   height: 100vh;
   float:left;
   position:relative;
+  overflow:hidden;
 }
 
 .threeGlobal{
@@ -40,6 +41,8 @@
   top:5%;
   left:5%;
   position:absolute;
+  transform: translateX(0);
+  transition: transform 0.7s ease-in-out;
 }
 
 .company_information{
@@ -210,6 +213,16 @@
   position:absolute;
   top:5%;
   right:5%;
+  transform: translateX(0);
+  transition: transform 0.7s ease-in-out;
+}
+
+.move_to_right{
+  transform: translateX(565px);
+}
+
+.move_to_left{
+  transform: translateX(-565px);
 }
 
 .timer{
@@ -220,6 +233,15 @@
   height:50px;
   color:white;
   font-size:15px;
+}
+
+.icon{
+  position:absolute;
+  bottom:16%;
+  left:-36px;
+  width:40px;
+  height:40px;
+  cursor:pointer;
 }
 
 .revenue{

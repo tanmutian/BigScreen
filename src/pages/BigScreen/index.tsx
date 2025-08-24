@@ -17,6 +17,7 @@ import device_stat from '@/assets/bigScreen/pic/device_status.png'
 import revenue_img from '@/assets/bigScreen/pic/revenue.png'
 import plan_blue from '@/assets/bigScreen/pic/plan_blue.png'
 import plan_green from '@/assets/bigScreen/pic/plan_green.png'
+import clear_icon from '@/assets/bigScreen/pic/clear.png'
 import * as echarts from 'echarts';
 import BarChart from './components/barChart'
 import BarChart2 from './components/Barchart2'
@@ -51,6 +52,8 @@ export default () => {
     setDevice,
     currentTime,
     setCurrentTime,
+    showScreen,
+    setShowScreen,
   } = useModel('BigScreen.model');
 
   const getDateRevenue = useCallback(
@@ -307,6 +310,14 @@ export default () => {
     }
   },[loadGlb, loadHdr])
 
+  const changeShowScreen = useCallback(() => {
+    if(showScreen === true){
+      setShowScreen(false)
+    }else{
+      setShowScreen(true)
+    }
+  },[setShowScreen, showScreen])
+
   useEffect(() => {
     let renderer;
     if(threeRef.current){
@@ -334,6 +345,8 @@ export default () => {
     }
   },[setCurrentTime])
 
+
+
   return (
     <div className={styles.global}>
       <div ref={threeRef} className={styles.threeGlobal}>
@@ -343,7 +356,7 @@ export default () => {
           新云工艺品可视化大屏
         </div>
       </div>
-      <div className={styles.left_side}>
+      <div className={`${styles.left_side} ${showScreen?'':styles.move_to_left}`}>
         <div className={styles.company_information}>
 
           <TitleBar 
@@ -439,7 +452,7 @@ export default () => {
 
 
 
-      <div className={styles.right_side}>
+      <div className={`${styles.right_side} ${showScreen?'':styles.move_to_right}`}>
         <div className={styles.timer}>
           {currentTime}
         </div>
@@ -486,6 +499,10 @@ export default () => {
           </div>
         </div>
 
+        <div className={styles.icon} onClick={changeShowScreen}>
+          <img src = {clear_icon}>
+          </img>
+        </div>
 
         <div className={styles.plan}>
           <TitleBar 
@@ -529,8 +546,6 @@ export default () => {
             </div>
           </div>
 
-          {/* <div id="main" className={styles.chart}>
-          </div> */}
           <BarChart>
           </BarChart>
         </div>

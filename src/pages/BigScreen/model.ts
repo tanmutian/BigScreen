@@ -59,6 +59,10 @@ export default () => {
     dayjs().format('YYYY-MM-DD HH:mm:ss')
   )
 
+  const [showScreen, setShowScreen] = useState<any>(
+    true
+  )
+
   return {
     serviceParamsGet,
     setServiceParamsGet,
@@ -80,5 +84,7 @@ export default () => {
     setDevice,
     currentTime,
     setCurrentTime,
+    showScreen,
+    setShowScreen,
   };
 };
