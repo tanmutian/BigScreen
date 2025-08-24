@@ -5,7 +5,13 @@
 .global{
   width: 100vw;
   height: 100vh;
-  background: blue;
+  float:left;
+  position:relative;
+}
+
+.threeGlobal{
+  width: 100vw;
+  height: 100vh;
   float:left;
 }
 
@@ -31,7 +37,9 @@
 .left_side{
   width:450px;
   height:1080px;
-  float:left;
+  top:5%;
+  left:5%;
+  position:absolute;
 }
 
 .company_information{
@@ -199,7 +207,19 @@
 .right_side{
   width:450px;
   height:1080px;
-  float:right;
+  position:absolute;
+  top:5%;
+  right:5%;
+}
+
+.timer{
+  position:absolute;
+  top:3%;
+  left:275px;
+  width:300px;
+  height:50px;
+  color:white;
+  font-size:15px;
 }
 
 .revenue{

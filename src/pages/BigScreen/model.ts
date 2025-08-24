@@ -1,5 +1,6 @@
 // 全局共享数据示例
 import { DEFAULT_NAME } from '@/constants';
+import dayjs from 'dayjs';
 import { useState } from 'react';
 
 export default () => {
@@ -54,6 +55,9 @@ export default () => {
       }
     ]
   })
+  const [currentTime, setCurrentTime] = useState<any>(
+    dayjs().format('YYYY-MM-DD HH:mm:ss')
+  )
 
   return {
     serviceParamsGet,
@@ -74,5 +78,7 @@ export default () => {
     setPlan,
     device,
     setDevice,
+    currentTime,
+    setCurrentTime,
   };
 };

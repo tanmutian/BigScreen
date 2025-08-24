@@ -21,6 +21,12 @@ import * as echarts from 'echarts';
 import BarChart from './components/barChart'
 import BarChart2 from './components/Barchart2'
 import TitleBar from '@/components/TitleBar';
+import * as THREE from 'three';
+import { TrackballControls } from 'three/examples/jsm/controls/TrackballControls';
+import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
+import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
+import dayjs from 'dayjs';
 //https://appstore.jiuxiniot.com/xy-3d-web/#/home
 
 export default () => {
@@ -43,6 +49,8 @@ export default () => {
     setPlan,
     device,
     setDevice,
+    currentTime,
+    setCurrentTime,
   } = useModel('BigScreen.model');
 
   const getDateRevenue = useCallback(
@@ -243,9 +251,93 @@ export default () => {
     }
   ];
   
+  const threeRef = useRef<HTMLDivElement>(null);
+
+  const loadHdr = useCallback(async () => {
+    return new Promise<any>((resolve, reject) =>{
+      new RGBELoader().load('./hdr/company.hdr', (texture) => {
+        resolve(texture)
+      })
+    })
+  },[]);
+
+  const loadGlb = useCallback(async () => {
+    return new Promise<any>((resolve, reject) => {
+      new GLTFLoader().load('./model/company.glb',(gltf)=>{
+        resolve(gltf)
+      })
+    })
+  },[]);
+
+  const init = useCallback(async (renderer) => {
+    if(threeRef.current){
+      const scene = new THREE.Scene();
+
+      const texture = await loadHdr();
+      const pmremGenerator = new THREE.PMREMGenerator(renderer);
+      pmremGenerator.compileEquirectangularShader();
+      const envMap = pmremGenerator.fromEquirectangular(texture).texture;
+      scene.environment = envMap;
+      scene.background = envMap;
+      texture.dispose();
+      pmremGenerator.dispose();
+
+      const gltf = await loadGlb();
+      scene.add(gltf.scene);
+
+      const camera = new THREE.PerspectiveCamera(
+        75,
+        threeRef.current.clientWidth / threeRef.current.clientHeight,
+        0.1,
+        1000000
+      );
+      camera.position.z = 200;
+      camera.position.y = 200;
+
+      const controls = new OrbitControls(camera, renderer.domElement);
+      controls.rotateSpeed = 5;
+      controls.panSpeed = 2;
+
+      const animate = () => {
+        requestAnimationFrame(animate);
+        controls.update()
+        renderer.render(scene, camera);
+      };
+      animate();
+    }
+  },[loadGlb, loadHdr])
+
+  useEffect(() => {
+    let renderer;
+    if(threeRef.current){
+      renderer = new THREE.WebGLRenderer();
+      renderer.setSize(threeRef.current.clientWidth, threeRef.current.clientHeight);
+      threeRef.current.appendChild(renderer.domElement);
+      init(renderer)
+    }
+
+    return () => {
+      if(threeRef.current){
+        threeRef.current.removeChild(renderer.domElement);
+        renderer.dispose();
+      }
+    }
+  },[init])  
+
+  useEffect(() =>{
+    let currentInterval = setInterval(() => {
+      setCurrentTime(dayjs().format('YYYY-MM-DD HH:mm:ss'))
+    }, 300);
+
+    return () => {
+      clearInterval(currentInterval)
+    }
+  },[setCurrentTime])
 
   return (
     <div className={styles.global}>
+      <div ref={threeRef} className={styles.threeGlobal}>
+      </div>
       <div className={styles.head_title}>
         <div className={styles.title_text}>
           新云工艺品可视化大屏
@@ -345,7 +437,12 @@ export default () => {
         </div>
       </div>
 
+
+
       <div className={styles.right_side}>
+        <div className={styles.timer}>
+          {currentTime}
+        </div>
         <div className={styles.revenue}>
           <TitleBar 
             getDate={()=> getDateRevenue()} 
