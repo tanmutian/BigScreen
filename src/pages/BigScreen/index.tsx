@@ -28,6 +28,8 @@ import { OrbitControls } from 'three/examples/jsm/controls/OrbitControls';
 import { RGBELoader } from 'three/examples/jsm/loaders/RGBELoader';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader';
 import dayjs from 'dayjs';
+import { useMutableCallback } from '@react-three/fiber/dist/declarations/src/core/utils';
+import {getUserCountApi} from './api'
 //https://appstore.jiuxiniot.com/xy-3d-web/#/home
 
 export default () => {
@@ -54,6 +56,8 @@ export default () => {
     setCurrentTime,
     showScreen,
     setShowScreen,
+    userCount,
+    setUserCount,
   } = useModel('BigScreen.model');
 
   const getDateRevenue = useCallback(
@@ -215,7 +219,6 @@ export default () => {
       dataIndex: "status_name",
       key: "status_name",
       render: (value,record,index) => {
-        console.log(value,record,index)
         return<div className={styles.status_name}>
           {value}
         </div>
@@ -226,7 +229,6 @@ export default () => {
       dataIndex: "complete",
       key: "complete",
       render: (value,record,index) => {
-        console.log(value,record,index)
         return<div className={styles.table_header_complete}>
           {value}
         </div>
@@ -236,7 +238,6 @@ export default () => {
       dataIndex: "wait_complete",
       key: "wait_complete",
       render: (value,record,index) => {
-        console.log(value,record,index)
         return<div className={styles.table_header_incomplete}>
           {value}
         </div>
@@ -246,7 +247,6 @@ export default () => {
       dataIndex: "total",
       key: "total",
       render: (value,record,index) => {
-        console.log(value,record,index)
         return<div className={styles.table_header_total}>
           {value}
         </div>
@@ -345,6 +345,14 @@ export default () => {
     }
   },[setCurrentTime])
 
+  const getUserCount = useCallback(async () => {
+    const response = await getUserCountApi({})
+    setUserCount(response.userCount)
+  },[setUserCount])
+
+  useEffect(() => {
+    getUserCount()
+  },[getUserCount])
 
 
   return (
@@ -411,7 +419,7 @@ export default () => {
             用户数量
           </div>
           <div className={styles.user_text_large}>
-            50
+            {userCount}
           </div>
           <div className={styles.user_text_unit}>
             人

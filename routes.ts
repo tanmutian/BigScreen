@@ -35,7 +35,7 @@ export const routes = [
     name: '模板ProTable列表',
     path: '/templateProTable',
     component: './TemplateProTable',
-    // layout: false
+    layout: false
   },
   {
     name: '模板ProTable详情',

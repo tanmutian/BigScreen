@@ -63,6 +63,10 @@ export default () => {
     true
   )
 
+  const [userCount, setUserCount] = useState<any>(
+    0
+  )
+
   return {
     serviceParamsGet,
     setServiceParamsGet,
@@ -86,5 +90,7 @@ export default () => {
     setCurrentTime,
     showScreen,
     setShowScreen,
+    userCount,
+    setUserCount,
   };
 };
