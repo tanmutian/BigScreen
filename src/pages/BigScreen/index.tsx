@@ -1,4 +1,4 @@
-import { templatePostApi, templateGetApi, templateDeleteApi, templatePutApi} from './api';
+import { templatePostApi, templateGetApi, templateDeleteApi, templatePutApi, getDeviceState, getRevenue, getCapacity, getPlan} from './api';
 import {
   ProSkeleton,
 } from '@ant-design/pro-components';
@@ -61,155 +61,92 @@ export default () => {
   } = useModel('BigScreen.model');
 
   const getDateRevenue = useCallback(
-    () => {
-      setFactoryRevenue({revenue:8,refund:5})
+    async () => {
+      const response = await getRevenue({time: 'day'})
+      setFactoryRevenue(response)
     },[setFactoryRevenue]
   )
 
   const getMonthRevenue = useCallback(
-    () => {
-      setFactoryRevenue({revenue:120,refund:80})
+    async () => {
+      const response = await getRevenue({time: 'month'})
+      setFactoryRevenue(response)
     },[setFactoryRevenue]
   )
 
   const getYearRevenue = useCallback(
-    () => {
-      setFactoryRevenue({revenue:800,refund:680})
+    async () => {
+      const response = await getRevenue({time: 'year'})
+      setFactoryRevenue(response)
     },[setFactoryRevenue]
   )
   
   const getDateCapacity = useCallback(
-    () => {
-      setCapacity({dataArray:[100,200,300,400]})
+    async () => {
+      const response = await getCapacity({time:'day'})
+      setCapacity(response)
     },[setCapacity]
   )
 
   const getMonthCapacity = useCallback(
-    () => {
-      setCapacity({dataArray:[300,500,700,900]})
+    async () => {
+      const response = await getCapacity({time:'month'})
+      setCapacity(response)
     },[setCapacity]
   )
 
   const getYearCapacity = useCallback(
-    () => {
-      setCapacity({dataArray:[1000,1500,2000,2500]})
+    async () => {
+      const response = await getCapacity({time:'year'})
+      setCapacity(response)
     },[setCapacity]
   )
 
     const getDatePlan = useCallback(
-    () => {
-      setPlan({
-        plan_value:12,
-        achieved_value:15,
-        x:['2025-07-01','2025-07-02','2025-07-03','2025-07-04','2025-07-05','2025-07-06','2025-07-07'],
-        data1:[1,7,5,8,9,4,5],
-      })
+    async () => {
+      const response = await getPlan({time:'day'})
+      setPlan(response)
     },[setPlan]
   )
 
   const getMonthPlan = useCallback(
-    () => {
-      setPlan({
-        plan_value:122,
-        achieved_value:155,
-        x:['01','02','03','04','05','06'],
-        data1:[15,85,45,68,92,150],
-      })
+    async () => {
+      const response = await getPlan({time:'month'})
+      setPlan(response)
     },[setPlan]
   )
 
   const getYearPlan = useCallback(
-    () => {
-      setPlan({
-        plan_value:1222,
-        achieved_value:1555,
-        x:['2019','2020','2021','2022','2023','2024','2025'],
-        data1:[120,150,167,121,142,180,158],
-      })
+    async () => {
+      const response = await getPlan({time:'year'})
+      setPlan(response)
     },[setPlan]
   )
 
   const getDateDevice = useCallback(
-    () => {
-      setDevice({
-        total:150,
-        data:[
-          {
-            status_name: "点检",
-            complete: 3,
-            wait_complete: 5,
-            total: 8,
-          },
-          {
-            status_name: "保养",
-            complete: 4,
-            wait_complete: 1,
-            total: 5,
-          },
-          {
-            status_name: "维修",
-            complete: 7,
-            wait_complete: 0,
-            total: 7,
-          }
-        ]
+    async () => {
+      const response = await getDeviceState({
+        type:'day'
       })
+      setDevice(response)
     },[setDevice]
   )
 
   const getMonthDevice = useCallback(
-    () => {
-      setDevice({
-        total:150,
-        data:[
-          {
-            status_name: "点检",
-            complete: 17,
-            wait_complete: 5,
-            total: 22,
-          },
-          {
-            status_name: "保养",
-            complete: 8,
-            wait_complete: 5,
-            total: 13,
-          },
-          {
-            status_name: "维修",
-            complete: 12,
-            wait_complete: 2,
-            total: 14,
-          }
-        ]
+    async () => {
+      const response = await getDeviceState({
+        type:'month'
       })
+      setDevice(response)
     },[setDevice]
   )
 
   const getYearDevice = useCallback(
-    () => {
-      setDevice({
-        total:150,
-        data:[
-          {
-            status_name: "点检",
-            complete: 30,
-            wait_complete: 6,
-            total: 36,
-          },
-          {
-            status_name: "保养",
-            complete: 38,
-            wait_complete: 10,
-            total: 48,
-          },
-          {
-            status_name: "维修",
-            complete: 50,
-            wait_complete: 2,
-            total: 52,
-          }
-        ]
+    async () => {
+      const response = await getDeviceState({
+        type: 'year'
       })
+      setDevice(response)
     },[setDevice]
   )
 

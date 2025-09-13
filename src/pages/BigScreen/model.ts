@@ -36,18 +36,21 @@ export default () => {
     total:150,
     data:[
       {
+        key:1,
         status_name: "点检",
         complete: 3,
         wait_complete: 5,
         total: 8,
       },
       {
+        key:2,
         status_name: "保养",
         complete: 4,
         wait_complete: 1,
         total: 5,
       },
       {
+        key:3,
         status_name: "维修",
         complete: 7,
         wait_complete: 0,

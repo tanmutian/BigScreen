@@ -34,6 +34,66 @@ export async function getUserCountApi(
   });
 }
 
+export async function getDeviceState(
+  params?: any,
+  options?: any,
+){
+  return request<any>('/api/v1/bigscreen/getDeviceState',{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${localStorage.getItem('token')}` || '',
+    },
+    data:params,
+    ...(options || {}),
+  });
+}
+
+export async function getRevenue(
+  params?: any,
+  options?: any,
+){
+  return request<any>('/api/v1/bigscreen/getRevenue',{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${localStorage.getItem('token')}` || '',
+    },
+    data:params,
+    ...(options || {}),
+  });
+}
+
+export async function getCapacity(
+  params?: any,
+  options?: any,
+){
+  return request<any>('/api/v1/bigscreen/getCapacity',{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${localStorage.getItem('token')}` || '',
+    },
+    data:params,
+    ...(options || {}),
+  });
+}
+
+export async function getPlan(
+  params?: any,
+  options?: any,
+){
+  return request<any>('/api/v1/bigscreen/getPlan',{
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${localStorage.getItem('token')}` || '',
+    },
+    data:params,
+    ...(options || {}),
+  });
+}
+
 export async function templatePostApi(
   params?: any,
   options?: any,
