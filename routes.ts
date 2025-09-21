@@ -62,6 +62,12 @@ export const routes = [
     layout: false,
   },
   {
+    name: '后台管理系统项目',
+    path: '/proTable',
+    component: './ProTable',
+    layout: false,
+  },
+  {
     name:'ThreeJS',
     path:'/testThreeJS',
     component: './TemplateThreeJS',

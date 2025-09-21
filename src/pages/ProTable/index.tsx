@@ -22,6 +22,32 @@ export default () => {
   
   return (
     <div className={styles.global}>
+      <div className={styles.finding}>
+
+        <div className = {styles.findingName}>
+          <div className = {styles.findingName1}>
+            <div className = {styles.findingName1_1}>
+            </div>
+            <div className = {styles.findingName1_2}>
+            </div>
+          </div>
+
+
+          <div className = {styles.findingName2}>
+            <div className = {styles.findingName2_1}>
+            </div>
+            <div className = {styles.findingName2_2}>
+            </div>
+          </div>
+        </div>
+
+        <div className = {styles.findingSex}>
+        </div>
+        <div className = {styles.findingBirth}>
+        </div>
+        <div className = {styles.findingAge}>
+        </div>
+      </div>
     </div>
   );
 };
