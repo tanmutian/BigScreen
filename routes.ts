@@ -68,6 +68,12 @@ export const routes = [
     layout: false,
   },
   {
+    name:'flex布局练习',
+    path: '/flexTemplate',
+    component: './FlexTemplate',
+    layout: false,
+  },
+  {
     name:'ThreeJS',
     path:'/testThreeJS',
     component: './TemplateThreeJS',
