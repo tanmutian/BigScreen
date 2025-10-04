@@ -43,6 +43,16 @@ export default () => {
     console.log('changed', value);
   };
 
+  const [name, setName] = useState<any>()
+
+  const onChangeName = useCallback((e) => {
+    console.log(e.target.value)
+    setName(e.target.value)
+  },[])
+
+  const reset = useCallback(() => {
+    setName(null)
+  },[])
 
 
   const columns: TableColumnsType<any> = [
@@ -116,8 +126,8 @@ export default () => {
 
   const [selectionType, setSelectionType] = useState<'checkbox' | 'radio'>('checkbox');
   
-  const rowSelection: TableProps<DataType>['rowSelection'] = {
-    onChange: (selectedRowKeys: React.Key[], selectedRows: DataType[]) => {
+  const rowSelection: TableProps<any>['rowSelection'] = {
+    onChange: (selectedRowKeys: React.Key[], selectedRows: any[]) => {
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
     },
   };
@@ -131,7 +141,7 @@ export default () => {
           <div className = {styles.label}>
             姓名：
           </div>
-          <Input placeholder="请输入" />
+          <Input placeholder="请输入" value = {name} onChange={onChangeName}/>
         </div>
 
         <div className = {styles.findingLabel}>
@@ -155,7 +165,7 @@ export default () => {
           </div>
           <ConfigProvider locale={locale}>
             <RangePicker showTime />
-          </ConfigProvider>;          
+          </ConfigProvider>         
 
         </div>
 
@@ -172,7 +182,7 @@ export default () => {
       </div>
 
       <div className = {styles.findingButton}>
-        <Button>
+        <Button onClick = {reset}>
           重置
         </Button>
         <Button type="primary">
