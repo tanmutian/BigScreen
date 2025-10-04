@@ -6,6 +6,7 @@ import 'dayjs/locale/zh-cn';
 import type { RequestConfig } from 'umi';
 import { message } from 'antd';
 import { goLogin } from './utils';
+import zhCN from 'antd/locale/zh_CN';
 
 
 export async function getInitialState(): Promise<{ name: string }> {

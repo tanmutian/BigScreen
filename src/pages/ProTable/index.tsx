@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Button, message, Popconfirm, Space, Upload, Input, Select, DatePicker, ConfigProvider, InputNumber } from 'antd';
-import { Divider, Radio, Table } from 'antd';
+import { Divider, Radio, Table, Pagination } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import {DownloadOutlined,PlusOutlined,UploadOutlined,} from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
@@ -21,12 +21,12 @@ dayjs.locale('zh-cn');
 
 const { RangePicker } = DatePicker;
 
-interface DataType {
-  key: React.Key;
-  name: string;
-  age: number;
-  address: string;
-}
+// interface DataType {
+//   key: React.Key;
+//   name: string;
+//   age: number;
+//   address: string;
+// }
 
 export default () => {
   const {
@@ -45,7 +45,7 @@ export default () => {
 
 
 
-  const columns: TableColumnsType<DataType> = [
+  const columns: TableColumnsType<any> = [
     {
       title: '序号',
       dataIndex: 'index',
@@ -63,35 +63,54 @@ export default () => {
       dataIndex: 'birthday',
     },
     {
-      title: 'Age',
+      title: '年龄',
       dataIndex: 'age',
+    },
+    {
+      title: 'Action',
+      key: 'action',
+      render: (_, record) => (
+        <Space size="middle">
+          <div className = {styles.tableText1}>编辑</div>
+          <div className = {styles.tableText1}>详情</div>
+          <div className = {styles.tableText2}>删除</div>
+        </Space>
+      ),
     },
   ];
 
-  const data: DataType[] = [
+  const data: any[] = [
     {
       key: '1',
+      index: 1,
       name: 'John Brown',
+      sex: '男',
+      birthday: '2025-10-04 11:12:11',
       age: 32,
-      address: 'New York No. 1 Lake Park',
     },
     {
       key: '2',
+      index: 1,
       name: 'Jim Green',
       age: 42,
-      address: 'London No. 1 Lake Park',
+      birthday: '2025-10-04 11:12:11',
+      sex: '男',
     },
     {
       key: '3',
+      index: 1,
       name: 'Joe Black',
       age: 32,
-      address: 'Sydney No. 1 Lake Park',
+      birthday: '2025-10-04 11:12:11',
+      sex: '男',
     },
     {
       key: '4',
+      index: 1,
       name: 'Disabled User',
       age: 99,
-      address: 'Sydney No. 1 Lake Park',
+      birthday: '2025-10-04 11:12:11',
+      sex: '男',
     },
   ];
 
@@ -176,11 +195,22 @@ export default () => {
       <div className = {styles.userList}>
         <Radio.Group onChange={(e) => setSelectionType(e.target.value)} value={selectionType}>
         </Radio.Group>
-        <Table<DataType>
+        <Table<any>
           rowSelection={{ type: selectionType, ...rowSelection }}
           columns={columns}
           dataSource={data}
+          pagination = {false}
         />
+        <div className = {styles.paginationStyle}>
+          <ConfigProvider locale={locale}>
+            <Pagination
+              total={85}
+              showTotal={(total, range) => `第${range[0]}-${range[1]}条/总共${total}条`}
+              showQuickJumper
+            />
+          </ConfigProvider>       
+        </div>
+
       </div>
     </div>
   );
