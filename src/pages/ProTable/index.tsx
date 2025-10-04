@@ -54,9 +54,27 @@ export default () => {
     setSex(value)
   },[])
 
+  const [date, setDate] = useState<any>()
+  const onChangeDate = useCallback((date) => {
+    setDate(date)
+  },[])
+
+  const [ageStart, setAgeStart] = useState<any>()
+  const onChangeAgeStart = useCallback((value) => {
+    setAgeStart(value)
+  },[])
+
+  const [ageEnd, setAgeEnd] = useState<any>()
+  const onChangeAgeEnd = useCallback((value) => {
+    setAgeEnd(value)
+  },[])
+
   const reset = useCallback(() => {
     setName(null)
     setSex(null)
+    setDate(null)
+    setAgeStart(null)
+    setAgeEnd(null)
   },[])
 
   const columns: TableColumnsType<any> = [
@@ -169,7 +187,7 @@ export default () => {
             出生日期：
           </div>
           <ConfigProvider locale={locale}>
-            <RangePicker showTime />
+            <RangePicker showTime value = {date} onChange = {onChangeDate}/>
           </ConfigProvider>         
 
         </div>
@@ -178,11 +196,11 @@ export default () => {
           <div className = {styles.label}>
             年龄：
           </div>          
-          <InputNumber placeholder='请输入' onChange={onChange} style={{ width: "50%" }}/>
+          <InputNumber placeholder='请输入' onChange={onChangeAgeStart} value = {ageStart} style={{ width: "50%" }} />
           <div className = {styles.sign}>
             ~
           </div>
-          <InputNumber placeholder='请输入' onChange={onChange} style={{ width: "50%" }}/>
+          <InputNumber placeholder='请输入' onChange={onChangeAgeEnd} value = {ageEnd} style={{ width: "50%" }}/>
         </div>
       </div>
 
