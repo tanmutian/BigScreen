@@ -44,16 +44,20 @@ export default () => {
   };
 
   const [name, setName] = useState<any>()
-
   const onChangeName = useCallback((e) => {
-    console.log(e.target.value)
+    // console.log(e.target.value)
     setName(e.target.value)
+  },[])
+
+  const [sex, setSex] = useState<any>()
+  const onChangeSex = useCallback((value) => {
+    setSex(value)
   },[])
 
   const reset = useCallback(() => {
     setName(null)
+    setSex(null)
   },[])
-
 
   const columns: TableColumnsType<any> = [
     {
@@ -149,13 +153,14 @@ export default () => {
             性别：
           </div>          
           <Select
-            defaultValue="请选择"
+            placeholder = "请选择"
             style={{ width: "100%" }}
-            onChange={handleChange}
             options={[
               { value: 'male', label: '男' },
               { value: 'female', label: '女' },
             ]}
+            value = {sex}
+            onChange = {onChangeSex}
           />
         </div>
 
@@ -173,11 +178,11 @@ export default () => {
           <div className = {styles.label}>
             年龄：
           </div>          
-          <InputNumber defaultValue='请输入' onChange={onChange} style={{ width: "50%" }}/>
+          <InputNumber placeholder='请输入' onChange={onChange} style={{ width: "50%" }}/>
           <div className = {styles.sign}>
             ~
           </div>
-          <InputNumber defaultValue='请输入' onChange={onChange} style={{ width: "50%" }}/>
+          <InputNumber placeholder='请输入' onChange={onChange} style={{ width: "50%" }}/>
         </div>
       </div>
 
