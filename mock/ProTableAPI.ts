@@ -1,11 +1,13 @@
 import dayjs from 'dayjs';
-import { random } from 'lodash';
+import { random, cloneDeep} from 'lodash';
+
+const sexAll = ['male','female']
 
 let data =new Array(60).fill(0).map((item,index) => {
   return{
     id: String(Math.random()),
     name: `刘德华${index}`,
-    sex: String(random(0,1)),
+    sex: sexAll[random(0,1)],
     birthTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
     age: random(0,100),
     member: new Array(2).fill(0).map((memberItem, memberIndex) => {
@@ -23,14 +25,45 @@ let data =new Array(60).fill(0).map((item,index) => {
 export default {
   'GET /api/v1/proTable/list': (req:any, res: any) => {
     const { current, pageSize, name, sex, dateStart, dateEnd, ageStart, ageEnd} = req.query;
-    let newData = data.filter(item => {
-      if(item.name.includes(name)){
-        return true
-      }else{
-        return false
-      }
-    })
-    console.log('111111111111111111111111111111111111111111111111',newData)
+    let newData = cloneDeep(data)
+    if(name){
+      newData = newData.filter(item => {
+        if(item.name.includes(name)){
+          return true
+        }else{
+          return false
+        }
+      })
+    }
+    if(sex){
+      newData = newData.filter(item => {
+        if(item.sex === sex){
+          return true
+        }else{
+          return false
+        }
+      })
+    }
+    if(ageStart){
+      newData = newData.filter(item => {
+        if(item.age >= ageStart){
+          return true
+        }else{
+          return false
+        }
+      })
+    }
+    if(ageEnd){
+      newData = newData.filter(item => {
+        if(item.age <= ageEnd){
+          return true
+        }else{
+          return false
+        }
+      })
+    }
+
+    //console.log('111111111111111111111111111111111111111111111111',newData)
     const start = Number(current - 1) * Number(pageSize);
     const end = start + Number(pageSize);
     res.json({
