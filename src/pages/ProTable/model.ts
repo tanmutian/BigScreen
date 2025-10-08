@@ -4,8 +4,9 @@ import { useCallback, useRef, useState } from 'react';
 import { templateDetailApi } from './api';
 
 export default () => {
-  
+  const [data,setData] = useState<any>()
   return {
-
+    data,
+    setData,
   };
 };

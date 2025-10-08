@@ -9,7 +9,7 @@ import { history, useModel } from '@umijs/max';
 import { uuidv4 } from '@antv/xflow';
 import { downloadFile, encodeURIParams } from '@/utils';
 import { cloneDeep, debounce } from 'lodash';
-import { templateDeleteApi, templateExportApi, templateListApi } from './api';
+import { proTableListApi, templateDeleteApi, templateExportApi, templateListApi } from './api';
 import DetailModal from './components/DetailModal';
 import DetailDrawer from './components/DetailDrawer';
 import styles from './index.less';
@@ -33,6 +33,8 @@ export default () => {
     refLayoutContent
   } = useModel('global');
   const {
+    data,
+    setData
   } = useModel('ProTable.model');
 
   const handleChange = (value: string) => {
@@ -77,6 +79,21 @@ export default () => {
     setAgeEnd(null)
   },[])
 
+  const searching = useCallback(async () => {
+    const response = await proTableListApi({
+      current: 1, 
+      pageSize: 20,
+      name: name,
+      sex: sex,
+      dateStart: date?.[0]?dayjs(date[0]).format('YYYY-MM-DD HH:mm:ss'):undefined,
+      dateEnd: date?.[1]?dayjs(date[1]).format('YYYY-MM-DD HH:mm:ss'):undefined,
+      ageStart: ageStart,
+      ageEnd: ageEnd,
+    })
+    console.log(response)
+    setData(response.data)
+  },[ageEnd, ageStart, date, name, setData, sex])
+
   const columns: TableColumnsType<any> = [
     {
       title: '序号',
@@ -111,40 +128,40 @@ export default () => {
     },
   ];
 
-  const data: any[] = [
-    {
-      key: '1',
-      index: 1,
-      name: 'John Brown',
-      sex: '男',
-      birthday: '2025-10-04 11:12:11',
-      age: 32,
-    },
-    {
-      key: '2',
-      index: 1,
-      name: 'Jim Green',
-      age: 42,
-      birthday: '2025-10-04 11:12:11',
-      sex: '男',
-    },
-    {
-      key: '3',
-      index: 1,
-      name: 'Joe Black',
-      age: 32,
-      birthday: '2025-10-04 11:12:11',
-      sex: '男',
-    },
-    {
-      key: '4',
-      index: 1,
-      name: 'Disabled User',
-      age: 99,
-      birthday: '2025-10-04 11:12:11',
-      sex: '男',
-    },
-  ];
+  // const data: any[] = [
+  //   {
+  //     key: '1',
+  //     index: 1,
+  //     name: 'John Brown',
+  //     sex: '男',
+  //     birthday: '2025-10-04 11:12:11',
+  //     age: 32,
+  //   },
+  //   {
+  //     key: '2',
+  //     index: 1,
+  //     name: 'Jim Green',
+  //     age: 42,
+  //     birthday: '2025-10-04 11:12:11',
+  //     sex: '男',
+  //   },
+  //   {
+  //     key: '3',
+  //     index: 1,
+  //     name: 'Joe Black',
+  //     age: 32,
+  //     birthday: '2025-10-04 11:12:11',
+  //     sex: '男',
+  //   },
+  //   {
+  //     key: '4',
+  //     index: 1,
+  //     name: 'Disabled User',
+  //     age: 99,
+  //     birthday: '2025-10-04 11:12:11',
+  //     sex: '男',
+  //   },
+  // ];
 
   const [selectionType, setSelectionType] = useState<'checkbox' | 'radio'>('checkbox');
   
@@ -208,7 +225,7 @@ export default () => {
         <Button onClick = {reset}>
           重置
         </Button>
-        <Button type="primary">
+        <Button type="primary" onClick = {searching}>
           查询
         </Button>
       </div>

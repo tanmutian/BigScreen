@@ -15,6 +15,21 @@ export async function templateListApi(
   });
 }
 
+export async function proTableListApi(
+  params: any,
+  options?: { [key:string]: any },
+) {
+  return request<any>('/api/v1/proTable/list', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${localStorage.getItem('toen')}` || '',
+    },
+    params,
+    ...(options || {})
+  })
+}
+
 export async function templateDetailApi(
   id: any,
   options?: { [key: string]: any },
