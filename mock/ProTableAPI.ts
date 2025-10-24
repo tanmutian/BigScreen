@@ -88,7 +88,6 @@ export default {
       })
     }
 
-    //console.log('111111111111111111111111111111111111111111111111',newData)
     const start = Number(current - 1) * Number(pageSize);
     const end = start + Number(pageSize);
     res.json({

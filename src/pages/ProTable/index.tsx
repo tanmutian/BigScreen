@@ -21,13 +21,6 @@ dayjs.locale('zh-cn');
 
 const { RangePicker } = DatePicker;
 
-// interface DataType {
-//   key: React.Key;
-//   name: string;
-//   age: number;
-//   address: string;
-// }
-
 export default () => {
   const {
     refLayoutContent
@@ -131,40 +124,7 @@ export default () => {
     },
   ];
 
-  // const data: any[] = [
-  //   {
-  //     key: '1',
-  //     index: 1,
-  //     name: 'John Brown',
-  //     sex: '男',
-  //     birthday: '2025-10-04 11:12:11',
-  //     age: 32,
-  //   },
-  //   {
-  //     key: '2',
-  //     index: 1,
-  //     name: 'Jim Green',
-  //     age: 42,
-  //     birthday: '2025-10-04 11:12:11',
-  //     sex: '男',
-  //   },
-  //   {
-  //     key: '3',
-  //     index: 1,
-  //     name: 'Joe Black',
-  //     age: 32,
-  //     birthday: '2025-10-04 11:12:11',
-  //     sex: '男',
-  //   },
-  //   {
-  //     key: '4',
-  //     index: 1,
-  //     name: 'Disabled User',
-  //     age: 99,
-  //     birthday: '2025-10-04 11:12:11',
-  //     sex: '男',
-  //   },
-  // ];
+
 
   const [selectionType, setSelectionType] = useState<'checkbox' | 'radio'>('checkbox');
   
