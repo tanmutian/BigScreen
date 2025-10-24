@@ -10,10 +10,21 @@ export default () => {
     current: 1,
     pageSize: 10,
   })
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalValue, setModalValue] = useState({
+    name: null,
+    age: null,
+    birthday: null,
+    sex: null,
+  })
   return {
     data,
     setData,
     pagination,
     setPagination,
+    isModalOpen, 
+    setIsModalOpen,
+    modalValue, 
+    setModalValue
   };
 };

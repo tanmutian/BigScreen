@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Button, message, Popconfirm, Space, Upload, Input, Select, DatePicker, ConfigProvider, InputNumber } from 'antd';
-import { Divider, Radio, Table, Pagination } from 'antd';
+import { Divider, Radio, Table, Pagination, Modal } from 'antd';
 import type { TableColumnsType, TableProps } from 'antd';
 import {DownloadOutlined,PlusOutlined,UploadOutlined,} from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
@@ -30,6 +30,10 @@ export default () => {
     setData,
     pagination,
     setPagination,
+    isModalOpen, 
+    setIsModalOpen,
+    modalValue, 
+    setModalValue,
   } = useModel('ProTable.model');
 
   const handleChange = (value: string) => {
@@ -125,6 +129,19 @@ export default () => {
   ];
 
 
+  const showModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const handleOk = () => {
+    setIsModalOpen(false);
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false);
+  };
+
+
 
   const [selectionType, setSelectionType] = useState<'checkbox' | 'radio'>('checkbox');
   
@@ -214,9 +231,45 @@ export default () => {
       </div>
 
       <div className = {styles.listButton}>
-        <Button type="primary" icon={<PlusOutlined />}>
+        <Button type="primary" icon={<PlusOutlined />} onClick={showModal}>
           新增
         </Button>
+        <Modal
+          title="新增"
+          //closable={{ 'aria-label': 'Custom Close Button' }}
+          //open={isModalOpen}
+          open = {true}
+          onOk={handleOk}
+          onCancel={handleCancel}
+        >
+          <div className={styles.newAddition}>
+            <div className={styles.modalInput}>
+              <div className={styles.addName}>
+                姓名：
+              </div>
+              <Input placeholder="请输入" value = {name} onChange={onChangeName} className={styles.addNameValue}/>
+
+            </div>
+            <div className={styles.modalInput}>
+              <div className={styles.addName}>
+                性别：
+              </div>
+            <Select
+              placeholder = "请选择"
+              style={{ width: "100%" }}
+              options={[
+                { value: 'male', label: '男' },
+                { value: 'female', label: '女' },
+              ]}
+              value = {sex}
+              onChange = {onChangeSex}
+              className = {styles.addSex}
+            />
+
+            </div>
+          </div>
+
+        </Modal>
         <Button icon={<UploadOutlined />}>
           导入
         </Button>
