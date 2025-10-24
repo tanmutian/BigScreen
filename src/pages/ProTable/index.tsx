@@ -34,7 +34,9 @@ export default () => {
   } = useModel('global');
   const {
     data,
-    setData
+    setData,
+    pagination,
+    setPagination,
   } = useModel('ProTable.model');
 
   const handleChange = (value: string) => {
@@ -82,7 +84,7 @@ export default () => {
   const searching = useCallback(async () => {
     const response = await proTableListApi({
       current: 1, 
-      pageSize: 20,
+      pageSize: pagination.pageSize,
       name: name,
       sex: sex,
       dateStart: date?.[0]?dayjs(date[0]).format('YYYY-MM-DD HH:mm:ss'):undefined,
@@ -92,7 +94,8 @@ export default () => {
     })
     console.log(response)
     setData(response.data)
-  },[ageEnd, ageStart, date, name, setData, sex])
+    setPagination(response.pagination)
+  },[ageEnd, ageStart, date, name, pagination, setData, setPagination, sex])
 
   const columns: TableColumnsType<any> = [
     {
@@ -170,6 +173,26 @@ export default () => {
       console.log(`selectedRowKeys: ${selectedRowKeys}`, 'selectedRows: ', selectedRows);
     },
   };
+
+  const paginationChange = useCallback(async(page, pageSize) => {
+    console.log(page,pageSize)
+    
+    const response = await proTableListApi({
+      current: page, 
+      pageSize: pageSize,
+      name: name,
+      sex: sex,
+      dateStart: date?.[0]?dayjs(date[0]).format('YYYY-MM-DD HH:mm:ss'):undefined,
+      dateEnd: date?.[1]?dayjs(date[1]).format('YYYY-MM-DD HH:mm:ss'):undefined,
+      ageStart: ageStart,
+      ageEnd: ageEnd,
+    })
+    console.log(response)
+    setData(response.data)
+    setPagination(response.pagination)
+  },[ageEnd, ageStart, date, name, setData, setPagination, sex])
+
+
 
 
   return (
@@ -254,9 +277,10 @@ export default () => {
         <div className = {styles.paginationStyle}>
           <ConfigProvider locale={locale}>
             <Pagination
-              total={85}
+              total={pagination.total}
               showTotal={(total, range) => `第${range[0]}-${range[1]}条/总共${total}条`}
               showQuickJumper
+              onChange = {paginationChange}
             />
           </ConfigProvider>       
         </div>

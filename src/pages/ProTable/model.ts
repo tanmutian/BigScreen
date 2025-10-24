@@ -5,8 +5,15 @@ import { templateDetailApi } from './api';
 
 export default () => {
   const [data,setData] = useState<any>()
+  const [pagination, setPagination] = useState<any>({
+    total: 0,
+    current: 1,
+    pageSize: 10,
+  })
   return {
     data,
     setData,
+    pagination,
+    setPagination,
   };
 };
