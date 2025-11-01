@@ -212,7 +212,7 @@ export default () => {
     })
   },[setModalValue])
 
-    const onChangeModalAge = useCallback((value) => {
+  const onChangeModalAge = useCallback((value) => {
     setModalValue((prev) => {
       return {
         ...prev,
@@ -221,6 +221,9 @@ export default () => {
     })
   },[setModalValue])
 
+  useEffect(() => {
+    searching()
+  },[])
   return (
     <div className = {styles.global}>
       <div className = {styles.finding}>
