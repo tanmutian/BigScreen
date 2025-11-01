@@ -147,6 +147,7 @@ export default () => {
       birthday: dayjs(modalValue.birthday).format('YYYY-MM-DD HH:mm:ss')
     })
     setIsModalOpen(false);
+    searching()
   };
 
   const handleCancel = () => {
@@ -291,6 +292,7 @@ export default () => {
           //closable={{ 'aria-label': 'Custom Close Button' }}
           open={isModalOpen}
           onOk={handleOk}
+          
           onCancel={handleCancel}
         >
           <div className={styles.newAddition}>
@@ -369,7 +371,7 @@ export default () => {
           <ConfigProvider locale={locale}>
             <Pagination
               total={pagination.total}
-              showTotal={(total, range) => `第${range[0]}-${range[1]}条/总共${total}条`}
+              showTotal={(total, range) => `第${(pagination.current-1) * pagination.pageSize + 1}-${Math.min((pagination.current-1) * pagination.pageSize+pagination.pageSize, total)}条/总共${total}条`}
               showQuickJumper
               onChange = {paginationChange}
             />
