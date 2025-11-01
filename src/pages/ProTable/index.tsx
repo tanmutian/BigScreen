@@ -9,7 +9,7 @@ import { history, useModel } from '@umijs/max';
 import { uuidv4 } from '@antv/xflow';
 import { downloadFile, encodeURIParams } from '@/utils';
 import { cloneDeep, debounce } from 'lodash';
-import { proTableListApi, templateDeleteApi, templateExportApi, templateListApi } from './api';
+import { proTableListApi, addApi, templateDeleteApi, templateExportApi, templateListApi } from './api';
 import DetailModal from './components/DetailModal';
 import DetailDrawer from './components/DetailDrawer';
 import styles from './index.less';
@@ -129,12 +129,23 @@ export default () => {
   ];
 
 
+
   const showModal = () => {
     setIsModalOpen(true);
+    setModalValue({
+      name: undefined,
+      age: undefined,
+      birthday: undefined,
+      sex: undefined,
+    })
   };
 
-  const handleOk = () => {
+  const handleOk = async() => {
     console.log(modalValue)
+    const response = await addApi({
+      ...modalValue,
+      birthday: dayjs(modalValue.birthday).format('YYYY-MM-DD HH:mm:ss')
+    })
     setIsModalOpen(false);
   };
 
@@ -286,7 +297,7 @@ export default () => {
               </div>
               <Input 
                 placeholder="请输入" 
-                value = {name} 
+                value = {modalValue.name} 
                 onChange={onChangeModalName} 
                 className={styles.addInput}
               />
@@ -302,7 +313,7 @@ export default () => {
                   { value: 'male', label: '男' },
                   { value: 'female', label: '女' },
                 ]}
-                value = {sex}
+                value = {modalValue.sex}
                 onChange = {onChangeModalSex}
                 className = {styles.addInput}
               />
@@ -316,6 +327,7 @@ export default () => {
                 onChange={onChangeModalDate}
                 onOk={onOk}
                 className = {styles.addInput}
+                value = {modalValue.birthday}
               />
             </div>
             <div className={styles.modalInput}>
@@ -325,7 +337,7 @@ export default () => {
               <InputNumber 
                 placeholder='请输入' 
                 onChange={onChangeModalAge} 
-                value = {ageStart} 
+                value = {modalValue.age} 
                 style={{ width: "50%" }}
                 className = {styles.addInput} 
               />

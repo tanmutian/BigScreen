@@ -120,3 +120,18 @@ export async function templateExportApi(
     getResponse: true,
   });
 }
+
+export async function addApi(
+  params?: any,
+  options?: any,
+) {
+  return request<any>('/api/v1/proTable/add', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${localStorage.getItem('token')}` || '',
+    },
+    data: params,
+    ...(options || {}),
+  });
+}

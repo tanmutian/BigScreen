@@ -12,10 +12,10 @@ export default () => {
   })
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalValue, setModalValue] = useState({
-    name: null,
-    age: null,
-    birthday: null,
-    sex: null,
+    name: undefined,
+    age: undefined,
+    birthday: undefined,
+    sex: undefined,
   })
   return {
     data,

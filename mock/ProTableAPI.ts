@@ -102,6 +102,18 @@ export default {
       success: true,
     });
   },
+  'POST /api/v1/proTable/add': (req:any, res: any) => {
+    console.log(req.body)
+    data.unshift({
+      ...req.body,
+      id: String(Math.random())
+    })
+    res.json({
+      msg: '请求成功',
+      code: 200,
+      success: true,
+    });
+  },
 };
 
 
