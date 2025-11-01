@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Button, message, Popconfirm, Space, Upload, Input, Select, DatePicker, ConfigProvider, InputNumber } from 'antd';
 import { Divider, Radio, Table, Pagination, Modal } from 'antd';
-import type { TableColumnsType, TableProps } from 'antd';
+import type { TableColumnsType, TableProps, } from 'antd';
 import {DownloadOutlined,PlusOutlined,UploadOutlined,} from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
@@ -20,6 +20,7 @@ import 'dayjs/locale/zh-cn';
 dayjs.locale('zh-cn');
 
 const { RangePicker } = DatePicker;
+
 
 export default () => {
   const {
@@ -46,7 +47,6 @@ export default () => {
 
   const [name, setName] = useState<any>()
   const onChangeName = useCallback((e) => {
-    // console.log(e.target.value)
     setName(e.target.value)
   },[])
 
@@ -134,6 +134,7 @@ export default () => {
   };
 
   const handleOk = () => {
+    console.log(modalValue)
     setIsModalOpen(false);
   };
 
@@ -169,8 +170,45 @@ export default () => {
     setPagination(response.pagination)
   },[ageEnd, ageStart, date, name, setData, setPagination, sex])
 
+  const onOk = (value: any) => {
+    console.log('onOk: ', value);
+  };
 
+  const onChangeModalName = useCallback((e) => {
+    setModalValue((prev) => {
+      return {
+        ...prev,
+        name:e.target.value
+      }
+    })
+  },[setModalValue])
 
+  const onChangeModalSex = useCallback((value) => {
+    setModalValue((prev) => {
+      return {
+        ...prev,
+        sex:value
+      }
+    })
+  },[setModalValue])
+
+    const onChangeModalDate = useCallback((value) => {
+    setModalValue((prev) => {
+      return {
+        ...prev,
+        birthday:value
+      }
+    })
+  },[setModalValue])
+
+    const onChangeModalAge = useCallback((value) => {
+    setModalValue((prev) => {
+      return {
+        ...prev,
+        age:value
+      }
+    })
+  },[setModalValue])
 
   return (
     <div className = {styles.global}>
@@ -237,8 +275,7 @@ export default () => {
         <Modal
           title="新增"
           //closable={{ 'aria-label': 'Custom Close Button' }}
-          //open={isModalOpen}
-          open = {true}
+          open={isModalOpen}
           onOk={handleOk}
           onCancel={handleCancel}
         >
@@ -247,25 +284,51 @@ export default () => {
               <div className={styles.addName}>
                 姓名：
               </div>
-              <Input placeholder="请输入" value = {name} onChange={onChangeName} className={styles.addNameValue}/>
-
+              <Input 
+                placeholder="请输入" 
+                value = {name} 
+                onChange={onChangeModalName} 
+                className={styles.addInput}
+              />
             </div>
             <div className={styles.modalInput}>
               <div className={styles.addName}>
                 性别：
               </div>
-            <Select
-              placeholder = "请选择"
-              style={{ width: "100%" }}
-              options={[
-                { value: 'male', label: '男' },
-                { value: 'female', label: '女' },
-              ]}
-              value = {sex}
-              onChange = {onChangeSex}
-              className = {styles.addSex}
-            />
-
+              <Select
+                placeholder = "请选择"
+                style={{ width: "100%" }}
+                options={[
+                  { value: 'male', label: '男' },
+                  { value: 'female', label: '女' },
+                ]}
+                value = {sex}
+                onChange = {onChangeModalSex}
+                className = {styles.addInput}
+              />
+            </div>
+            <div className={styles.modalInput}>
+              <div className={styles.addName}>
+                出生日期：
+              </div>
+              <DatePicker
+                showTime
+                onChange={onChangeModalDate}
+                onOk={onOk}
+                className = {styles.addInput}
+              />
+            </div>
+            <div className={styles.modalInput}>
+              <div className={styles.addName}>
+                年龄：
+              </div>
+              <InputNumber 
+                placeholder='请输入' 
+                onChange={onChangeModalAge} 
+                value = {ageStart} 
+                style={{ width: "50%" }}
+                className = {styles.addInput} 
+              />
             </div>
           </div>
 

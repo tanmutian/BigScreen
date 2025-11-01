@@ -191,8 +191,9 @@ export default () => {
     }
   ];
   
-  const threeRef = useRef<HTMLDivElement>(null);
+  const threeRef = useRef<HTMLDivElement>(null);//加载画布
 
+  //hdr为环境贴图
   const loadHdr = useCallback(async () => {
     return new Promise<any>((resolve, reject) =>{
       new RGBELoader().load('./hdr/company.hdr', (texture) => {
@@ -201,6 +202,7 @@ export default () => {
     })
   },[]);
 
+  //加载3D模型
   const loadGlb = useCallback(async () => {
     return new Promise<any>((resolve, reject) => {
       new GLTFLoader().load('./model/company.glb',(gltf)=>{
