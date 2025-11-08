@@ -128,9 +128,19 @@ export default () => {
         <Space size="middle">
           <div className = {styles.tableText1}>编辑</div>
           <div className = {styles.tableText1}>详情</div>
-          <div className = {styles.tableText2} onClick = {()=>deleteList(record)}>
-            删除
-          </div>
+          <Popconfirm
+            title="删除数据"
+            description="确定要删除这条数据吗？"
+            onConfirm={()=>deleteList(record)}
+            okText="确认"
+            cancelText="取消"
+            okButtonProps = {{danger:true}}
+          >
+            <div className = {styles.tableText2}>
+              删除
+            </div>
+          </Popconfirm>
+
         </Space>
       ),
     },

@@ -117,6 +117,15 @@ export default {
   'POST /api/v1/proTable/delete': (req:any, res:any) => {
     let currentIndex = data.findIndex(item => item.id===req.body.id)
     data.splice(currentIndex,1)
+    // let newData:any = []
+    // for(let i=0;i<data.length;i++){
+    //   if(data[i].id === req.body.id){
+    //     continue
+    //   }else{
+    //     newData.push(data[i])
+    //   }
+    // }
+    // data = newData
     res.json({
       msg:'请求成功',
       code:200,
