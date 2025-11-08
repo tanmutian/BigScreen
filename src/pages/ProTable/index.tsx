@@ -35,6 +35,10 @@ export default () => {
     setIsModalAddOpen,
     modalAddValue, 
     setModalAddValue,
+    isModalEditOpen,
+    setIsModalEditOpen,
+    modalEditValue, 
+    setModalEditValue,
   } = useModel('ProTable.model');
 
   const handleChange = (value: string) => {
@@ -126,7 +130,9 @@ export default () => {
       key: 'action',
       render: (_, record) => (
         <Space size="middle">
-          <div className = {styles.tableText1}>编辑</div>
+          <div className = {styles.tableText1} onClick = {()=>editValue(record)}>
+            编辑
+          </div>
           <div className = {styles.tableText1}>详情</div>
           <Popconfirm
             title="删除数据"
@@ -158,7 +164,7 @@ export default () => {
     })
   };
 
-  const handleOk = async() => {
+  const handleAddOk = async() => {
     console.log(modalAddValue)
     const response = await addApi({
       ...modalAddValue,
@@ -168,8 +174,42 @@ export default () => {
     searching()
   };
 
-  const handleCancel = () => {
+  const handleAddCancel = () => {
     setIsModalAddOpen(false);
+  };
+
+  const editValue = useCallback((record) => {
+    setIsModalEditOpen(true);
+    setModalEditValue({
+      name: record.name,
+      age: record.age,
+      birthday: dayjs(record.birthday),
+      sex: record.sex,
+    })
+  },[setIsModalEditOpen, setModalEditValue])
+
+  // const showModalEdit = () => {
+  //   setIsModalAddOpen(true);
+  //   setModalAddValue({
+  //     name: undefined,
+  //     age: undefined,
+  //     birthday: undefined,
+  //     sex: undefined,
+  //   })
+  // };
+
+  const handleEditOk = async() => {
+    console.log(modalAddValue)
+    const response = await addApi({
+      ...modalAddValue,
+      birthday: dayjs(modalAddValue.birthday).format('YYYY-MM-DD HH:mm:ss')
+    })
+    setIsModalEditOpen(false);
+    searching()
+  };
+
+  const handleEditCancel = () => {
+    setIsModalEditOpen(false);
   };
 
 
@@ -309,9 +349,9 @@ export default () => {
           title="新增"
           //closable={{ 'aria-label': 'Custom Close Button' }}
           open={isModalAddOpen}
-          onOk={handleOk}
+          onOk={handleAddOk}
           
-          onCancel={handleCancel}
+          onCancel={handleAddCancel}
         >
           <div className={styles.newAddition}>
             <div className={styles.modalInput}>
@@ -397,6 +437,68 @@ export default () => {
         </div>
 
       </div>
+
+      <Modal
+        title="新增"
+        open={isModalEditOpen}
+        onOk={handleEditOk}
+        
+        onCancel={handleEditCancel}
+      >
+        <div className={styles.newAddition}>
+          <div className={styles.modalInput}>
+            <div className={styles.addName}>
+              姓名：
+            </div>
+            <Input 
+              placeholder="请输入" 
+              value = {modalEditValue.name} 
+              onChange={onChangeModalName} 
+              className={styles.addInput}
+            />
+          </div>
+          <div className={styles.modalInput}>
+            <div className={styles.addName}>
+              性别：
+            </div>
+            <Select
+              placeholder = "请选择"
+              style={{ width: "100%" }}
+              options={[
+                { value: 'male', label: '男' },
+                { value: 'female', label: '女' },
+              ]}
+              value = {modalEditValue.sex}
+              onChange = {onChangeModalSex}
+              className = {styles.addInput}
+            />
+          </div>
+          <div className={styles.modalInput}>
+            <div className={styles.addName}>
+              出生日期：
+            </div>
+            <DatePicker
+              showTime
+              onChange={onChangeModalDate}
+              onOk={onOk}
+              className = {styles.addInput}
+              value = {modalEditValue.birthday}
+            />
+          </div>
+          <div className={styles.modalInput}>
+            <div className={styles.addName}>
+              年龄：
+            </div>
+            <InputNumber 
+              placeholder='请输入' 
+              onChange={onChangeModalAge} 
+              value = {modalEditValue.age} 
+              style={{ width: "50%" }}
+              className = {styles.addInput} 
+            />
+          </div>
+        </div>
+      </Modal>      
     </div>
   );
 };

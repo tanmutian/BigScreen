@@ -10,13 +10,25 @@ export default () => {
     current: 1,
     pageSize: 10,
   })
+
   const [isModalAddOpen, setIsModalAddOpen] = useState(false);
+
   const [modalAddValue, setModalAddValue] = useState({
     name: undefined,
     age: undefined,
     birthday: undefined,
     sex: undefined,
   })
+
+  const [isModalEditOpen, setIsModalEditOpen] = useState(false);
+
+  const [modalEditValue, setModalEditValue] = useState<any>({
+    name: undefined,
+    age: undefined,
+    birthday: undefined,
+    sex: undefined,
+  })
+
   return {
     data,
     setData,
@@ -25,6 +37,10 @@ export default () => {
     isModalAddOpen, 
     setIsModalAddOpen,
     modalAddValue, 
-    setModalAddValue
+    setModalAddValue,
+    isModalEditOpen,
+    setIsModalEditOpen,
+    modalEditValue, 
+    setModalEditValue,
   };
 };
