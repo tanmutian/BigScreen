@@ -113,11 +113,16 @@ export default () => {
   },[setIsModalEditOpen, setModalEditValue])
 
 
+  const onOk = (value: any) => {
+    console.log('onOk: ', value);
+  };
+
   const handleEditOk = async() => {
     const response = await editApi({
       ...modalEditValue,
-      birthday: dayjs(modalAddValue.birthday).format('YYYY-MM-DD HH:mm:ss')
+      birthday: dayjs(modalEditValue.birthday).format('YYYY-MM-DD HH:mm:ss')
     })
+    console.log(modalEditValue)
     setIsModalEditOpen(false);
     searching()
   };
@@ -125,6 +130,42 @@ export default () => {
   const handleEditCancel = () => {
     setIsModalEditOpen(false);
   };
+
+  const onChangeEditModalName = useCallback((e) => {
+    setModalEditValue((prev) => {
+      return {
+        ...prev,
+        name:e.target.value
+      }
+    })
+  },[setModalEditValue])
+
+  const onChangeEditModalSex = useCallback((value) => {
+    setModalEditValue((prev) => {
+      return {
+        ...prev,
+        sex:value
+      }
+    })
+  },[setModalEditValue])
+
+    const onChangeEditModalDate = useCallback((value) => {
+    setModalEditValue((prev) => {
+      return {
+        ...prev,
+        birthday:value
+      }
+    })
+  },[setModalEditValue])
+
+  const onChangeEditModalAge = useCallback((value) => {
+    setModalEditValue((prev) => {
+      return {
+        ...prev,
+        age:value
+      }
+    })
+  },[setModalEditValue])
 
   const columns: TableColumnsType<any> = [
     {
@@ -201,9 +242,6 @@ export default () => {
   };
 
 
-
-
-
   const [selectionType, setSelectionType] = useState<'checkbox' | 'radio'>('checkbox');
   
   const rowSelection: TableProps<any>['rowSelection'] = {
@@ -230,11 +268,9 @@ export default () => {
     setPagination(response.pagination)
   },[ageEnd, ageStart, date, name, setData, setPagination, sex])
 
-  const onOk = (value: any) => {
-    console.log('onOk: ', value);
-  };
 
-  const onChangeModalName = useCallback((e) => {
+
+  const onChangeAddModalName = useCallback((e) => {
     setModalAddValue((prev) => {
       return {
         ...prev,
@@ -243,7 +279,7 @@ export default () => {
     })
   },[setModalAddValue])
 
-  const onChangeModalSex = useCallback((value) => {
+  const onChangeAddModalSex = useCallback((value) => {
     setModalAddValue((prev) => {
       return {
         ...prev,
@@ -252,7 +288,7 @@ export default () => {
     })
   },[setModalAddValue])
 
-    const onChangeModalDate = useCallback((value) => {
+    const onChangeAddModalDate = useCallback((value) => {
     setModalAddValue((prev) => {
       return {
         ...prev,
@@ -261,7 +297,7 @@ export default () => {
     })
   },[setModalAddValue])
 
-  const onChangeModalAge = useCallback((value) => {
+  const onChangeAddModalAge = useCallback((value) => {
     setModalAddValue((prev) => {
       return {
         ...prev,
@@ -351,7 +387,7 @@ export default () => {
               <Input 
                 placeholder="请输入" 
                 value = {modalAddValue.name} 
-                onChange={onChangeModalName} 
+                onChange={onChangeAddModalName} 
                 className={styles.addInput}
               />
             </div>
@@ -367,7 +403,7 @@ export default () => {
                   { value: 'female', label: '女' },
                 ]}
                 value = {modalAddValue.sex}
-                onChange = {onChangeModalSex}
+                onChange = {onChangeAddModalSex}
                 className = {styles.addInput}
               />
             </div>
@@ -377,7 +413,7 @@ export default () => {
               </div>
               <DatePicker
                 showTime
-                onChange={onChangeModalDate}
+                onChange={onChangeAddModalDate}
                 onOk={onOk}
                 className = {styles.addInput}
                 value = {modalAddValue.birthday}
@@ -389,7 +425,7 @@ export default () => {
               </div>
               <InputNumber 
                 placeholder='请输入' 
-                onChange={onChangeModalAge} 
+                onChange={onChangeAddModalAge} 
                 value = {modalAddValue.age} 
                 style={{ width: "50%" }}
                 className = {styles.addInput} 
@@ -429,7 +465,7 @@ export default () => {
       </div>
 
       <Modal
-        title="新增"
+        title="编辑"
         open={isModalEditOpen}
         onOk={handleEditOk}
         
@@ -443,7 +479,7 @@ export default () => {
             <Input 
               placeholder="请输入" 
               value = {modalEditValue.name} 
-              onChange={onChangeModalName} 
+              onChange={onChangeEditModalName} 
               className={styles.addInput}
             />
           </div>
@@ -459,7 +495,7 @@ export default () => {
                 { value: 'female', label: '女' },
               ]}
               value = {modalEditValue.sex}
-              onChange = {onChangeModalSex}
+              onChange = {onChangeEditModalSex}
               className = {styles.addInput}
             />
           </div>
@@ -469,7 +505,7 @@ export default () => {
             </div>
             <DatePicker
               showTime
-              onChange={onChangeModalDate}
+              onChange={onChangeEditModalDate}
               onOk={onOk}
               className = {styles.addInput}
               value = {modalEditValue.birthday}
@@ -481,7 +517,7 @@ export default () => {
             </div>
             <InputNumber 
               placeholder='请输入' 
-              onChange={onChangeModalAge} 
+              onChange={onChangeEditModalAge} 
               value = {modalEditValue.age} 
               style={{ width: "50%" }}
               className = {styles.addInput} 
