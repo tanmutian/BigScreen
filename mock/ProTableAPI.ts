@@ -131,7 +131,22 @@ export default {
       code:200,
       success: true,
     })
-  }
+  },
+  'POST /api/v1/proTable/edit': (req:any, res:any) => {
+    let currentIndex = data.findIndex(item => item.id===req.body.id)
+    data[currentIndex] = {
+      ...data[currentIndex],
+      name: req.name,
+      age: req.age,
+      birthday: req.birthday,
+      sex: req.sex,
+    }
+    res.json({
+      msg:'请求成功',
+      code:200,
+      success: true,
+    })
+  },
 };
 
 

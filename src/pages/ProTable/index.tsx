@@ -9,7 +9,7 @@ import { history, useModel } from '@umijs/max';
 import { uuidv4 } from '@antv/xflow';
 import { downloadFile, encodeURIParams } from '@/utils';
 import { cloneDeep, debounce } from 'lodash';
-import { proTableListApi, addApi, deleteApi, templateDeleteApi, templateExportApi, templateListApi } from './api';
+import { proTableListApi, addApi, deleteApi, editApi,templateDeleteApi, templateExportApi, templateListApi } from './api';
 import DetailModal from './components/DetailModal';
 import DetailDrawer from './components/DetailDrawer';
 import styles from './index.less';
@@ -104,6 +104,28 @@ export default () => {
     searching()
   },[searching])
 
+  const editValue = useCallback((record) => {
+    setIsModalEditOpen(true);
+    setModalEditValue({
+      ...record,
+      birthday: dayjs(record.birthday),
+    })
+  },[setIsModalEditOpen, setModalEditValue])
+
+
+  const handleEditOk = async() => {
+    const response = await editApi({
+      ...modalEditValue,
+      birthday: dayjs(modalAddValue.birthday).format('YYYY-MM-DD HH:mm:ss')
+    })
+    setIsModalEditOpen(false);
+    searching()
+  };
+
+  const handleEditCancel = () => {
+    setIsModalEditOpen(false);
+  };
+
   const columns: TableColumnsType<any> = [
     {
       title: '序号',
@@ -178,39 +200,7 @@ export default () => {
     setIsModalAddOpen(false);
   };
 
-  const editValue = useCallback((record) => {
-    setIsModalEditOpen(true);
-    setModalEditValue({
-      name: record.name,
-      age: record.age,
-      birthday: dayjs(record.birthday),
-      sex: record.sex,
-    })
-  },[setIsModalEditOpen, setModalEditValue])
 
-  // const showModalEdit = () => {
-  //   setIsModalAddOpen(true);
-  //   setModalAddValue({
-  //     name: undefined,
-  //     age: undefined,
-  //     birthday: undefined,
-  //     sex: undefined,
-  //   })
-  // };
-
-  const handleEditOk = async() => {
-    console.log(modalAddValue)
-    const response = await addApi({
-      ...modalAddValue,
-      birthday: dayjs(modalAddValue.birthday).format('YYYY-MM-DD HH:mm:ss')
-    })
-    setIsModalEditOpen(false);
-    searching()
-  };
-
-  const handleEditCancel = () => {
-    setIsModalEditOpen(false);
-  };
 
 
 
