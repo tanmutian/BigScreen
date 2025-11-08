@@ -31,10 +31,10 @@ export default () => {
     setData,
     pagination,
     setPagination,
-    isModalOpen, 
-    setIsModalOpen,
-    modalValue, 
-    setModalValue,
+    isModalAddOpen, 
+    setIsModalAddOpen,
+    modalAddValue, 
+    setModalAddValue,
   } = useModel('ProTable.model');
 
   const handleChange = (value: string) => {
@@ -148,9 +148,9 @@ export default () => {
 
 
 
-  const showModal = () => {
-    setIsModalOpen(true);
-    setModalValue({
+  const showModaladd = () => {
+    setIsModalAddOpen(true);
+    setModalAddValue({
       name: undefined,
       age: undefined,
       birthday: undefined,
@@ -159,17 +159,17 @@ export default () => {
   };
 
   const handleOk = async() => {
-    console.log(modalValue)
+    console.log(modalAddValue)
     const response = await addApi({
-      ...modalValue,
-      birthday: dayjs(modalValue.birthday).format('YYYY-MM-DD HH:mm:ss')
+      ...modalAddValue,
+      birthday: dayjs(modalAddValue.birthday).format('YYYY-MM-DD HH:mm:ss')
     })
-    setIsModalOpen(false);
+    setIsModalAddOpen(false);
     searching()
   };
 
   const handleCancel = () => {
-    setIsModalOpen(false);
+    setIsModalAddOpen(false);
   };
 
 
@@ -205,40 +205,40 @@ export default () => {
   };
 
   const onChangeModalName = useCallback((e) => {
-    setModalValue((prev) => {
+    setModalAddValue((prev) => {
       return {
         ...prev,
         name:e.target.value
       }
     })
-  },[setModalValue])
+  },[setModalAddValue])
 
   const onChangeModalSex = useCallback((value) => {
-    setModalValue((prev) => {
+    setModalAddValue((prev) => {
       return {
         ...prev,
         sex:value
       }
     })
-  },[setModalValue])
+  },[setModalAddValue])
 
     const onChangeModalDate = useCallback((value) => {
-    setModalValue((prev) => {
+    setModalAddValue((prev) => {
       return {
         ...prev,
         birthday:value
       }
     })
-  },[setModalValue])
+  },[setModalAddValue])
 
   const onChangeModalAge = useCallback((value) => {
-    setModalValue((prev) => {
+    setModalAddValue((prev) => {
       return {
         ...prev,
         age:value
       }
     })
-  },[setModalValue])
+  },[setModalAddValue])
 
   useEffect(() => {
     searching()
@@ -302,13 +302,13 @@ export default () => {
       </div>
 
       <div className = {styles.listButton}>
-        <Button type="primary" icon={<PlusOutlined />} onClick={showModal}>
+        <Button type="primary" icon={<PlusOutlined />} onClick={showModaladd}>
           新增
         </Button>
         <Modal
           title="新增"
           //closable={{ 'aria-label': 'Custom Close Button' }}
-          open={isModalOpen}
+          open={isModalAddOpen}
           onOk={handleOk}
           
           onCancel={handleCancel}
@@ -320,7 +320,7 @@ export default () => {
               </div>
               <Input 
                 placeholder="请输入" 
-                value = {modalValue.name} 
+                value = {modalAddValue.name} 
                 onChange={onChangeModalName} 
                 className={styles.addInput}
               />
@@ -336,7 +336,7 @@ export default () => {
                   { value: 'male', label: '男' },
                   { value: 'female', label: '女' },
                 ]}
-                value = {modalValue.sex}
+                value = {modalAddValue.sex}
                 onChange = {onChangeModalSex}
                 className = {styles.addInput}
               />
@@ -350,7 +350,7 @@ export default () => {
                 onChange={onChangeModalDate}
                 onOk={onOk}
                 className = {styles.addInput}
-                value = {modalValue.birthday}
+                value = {modalAddValue.birthday}
               />
             </div>
             <div className={styles.modalInput}>
@@ -360,7 +360,7 @@ export default () => {
               <InputNumber 
                 placeholder='请输入' 
                 onChange={onChangeModalAge} 
-                value = {modalValue.age} 
+                value = {modalAddValue.age} 
                 style={{ width: "50%" }}
                 className = {styles.addInput} 
               />

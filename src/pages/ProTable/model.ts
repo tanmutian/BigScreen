@@ -10,8 +10,8 @@ export default () => {
     current: 1,
     pageSize: 10,
   })
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [modalValue, setModalValue] = useState({
+  const [isModalAddOpen, setIsModalAddOpen] = useState(false);
+  const [modalAddValue, setModalAddValue] = useState({
     name: undefined,
     age: undefined,
     birthday: undefined,
@@ -22,9 +22,9 @@ export default () => {
     setData,
     pagination,
     setPagination,
-    isModalOpen, 
-    setIsModalOpen,
-    modalValue, 
-    setModalValue
+    isModalAddOpen, 
+    setIsModalAddOpen,
+    modalAddValue, 
+    setModalAddValue
   };
 };
