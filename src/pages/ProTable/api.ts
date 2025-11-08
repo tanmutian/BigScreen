@@ -135,3 +135,18 @@ export async function addApi(
     ...(options || {}),
   });
 }
+
+export async function deleteApi(
+  params?: any,
+  options?: any,
+) {
+  return request<any>('/api/v1/proTable/delete', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${localStorage.getItem('token')}` || '',
+    },
+    data:params,
+    ...(options || {})
+  })
+}

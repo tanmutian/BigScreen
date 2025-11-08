@@ -103,7 +103,7 @@ export default {
     });
   },
   'POST /api/v1/proTable/add': (req:any, res: any) => {
-    console.log(req.body)
+    //console.log(req.body)
     data.unshift({
       ...req.body,
       id: String(Math.random())
@@ -114,6 +114,15 @@ export default {
       success: true,
     });
   },
+  'POST /api/v1/proTable/delete': (req:any, res:any) => {
+    let currentIndex = data.findIndex(item => item.id===req.body.id)
+    data.splice(currentIndex,1)
+    res.json({
+      msg:'请求成功',
+      code:200,
+      success: true,
+    })
+  }
 };
 
 

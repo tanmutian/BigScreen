@@ -9,7 +9,7 @@ import { history, useModel } from '@umijs/max';
 import { uuidv4 } from '@antv/xflow';
 import { downloadFile, encodeURIParams } from '@/utils';
 import { cloneDeep, debounce } from 'lodash';
-import { proTableListApi, addApi, templateDeleteApi, templateExportApi, templateListApi } from './api';
+import { proTableListApi, addApi, deleteApi, templateDeleteApi, templateExportApi, templateListApi } from './api';
 import DetailModal from './components/DetailModal';
 import DetailDrawer from './components/DetailDrawer';
 import styles from './index.less';
@@ -94,6 +94,12 @@ export default () => {
     setPagination(response.pagination)
   },[ageEnd, ageStart, date, name, pagination, setData, setPagination, sex])
 
+  const deleteList = useCallback(async(record) => {
+    console.log(record)
+    const response = await deleteApi({id:record.id})
+    searching()
+  },[searching])
+
   const columns: TableColumnsType<any> = [
     {
       title: '序号',
@@ -122,7 +128,9 @@ export default () => {
         <Space size="middle">
           <div className = {styles.tableText1}>编辑</div>
           <div className = {styles.tableText1}>详情</div>
-          <div className = {styles.tableText2}>删除</div>
+          <div className = {styles.tableText2} onClick = {()=>deleteList(record)}>
+            删除
+          </div>
         </Space>
       ),
     },
