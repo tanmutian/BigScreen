@@ -134,18 +134,18 @@ export default {
   },
   'POST /api/v1/proTable/edit': (req:any, res:any) => {
     let currentIndex = data.findIndex(item => item.id===req.body.id)
-    console.log("asdfasdf:"+{
-      name: req.name,
-      age: req.age,
-      birthday: req.birthday,
-      sex: req.sex,
-    })
+    // console.log("asdfasdf:"+{
+    //   name: req.name,
+    //   age: req.age,
+    //   birthday: req.birthday,
+    //   sex: req.sex,
+    // })
     data[currentIndex] = {
       ...data[currentIndex],
-      name: req.name,
-      age: req.age,
-      birthday: req.birthday,
-      sex: req.sex,
+      name: req.body.name,
+      age: req.body.age,
+      birthday: req.body.birthday,
+      sex: req.body.sex,
     }
     res.json({
       msg:'请求成功',
