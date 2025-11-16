@@ -104,16 +104,16 @@
     align-items:center;
     margin-bottom: 16px;
   }
-
   .detailName{
     flex:1;
     text-align:right;
   }
-  
   .detailValue{
     flex:1;
   }
 }
+
+
 
 .drawerGlobal{
   display:flex;
@@ -121,6 +121,7 @@
 
   .basicDetail{
     display:flex;
+    flex-direction: column;
     flex:1;
   }
 
@@ -134,13 +135,51 @@
     height:15px;
     align-items: center;
   }
-  .colorBlock{
+
+  .basicValue{
+    display:flex;
+    flex-direction: column;
+  }
+
+  .colorBlock1{
     width:4px;
     height:14px;
     background: blue;
   }
 
+  .colorBlock2{
+    width:4px;
+    height:14px;
+    background: purple;
+  }
+
   .textBlock{
     margin-left:10px;
+  }
+
+  .outRow{
+    display:flex;
+    flex:1;
+    margin-top: 25px;
+    // align-items: center;
+
+    .inRow{
+      display:flex;
+      flex:1;
+      .rowName{
+        flex:1;
+        text-align:right;
+      }
+      .rowValue{
+        flex:1
+      }
+    }
+  }
+
+  .familyTitle{
+    display:flex;
+    height:15px;
+    align-items: center;
+    margin-top: 50px;
   }
 }

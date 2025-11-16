@@ -597,56 +597,70 @@ export default () => {
       </Modal>        
 
       <Drawer
-        title="Basic Drawer"
+        title="详情"
         // open={isModalDetailOpen}
         open = {true}
         onClose={handleDetailCancel}
+        size = {'large'}
       >
         <div className = {styles.drawerGlobal}>
           <div className = {styles.basicDetail}>
+
             <div className = {styles.basicTitle}>
-              <div className = {styles.colorBlock}>
+              <div className = {styles.colorBlock1}>
               </div>
               <div className = {styles.textBlock}>
                 基本信息
               </div>              
             </div>
+
             <div className = {styles.basicValue}>
-              <div className={styles.firstRow}>
-                <div className={styles.rowName}>
-                  姓名：
+              <div className={styles.outRow}>
+                <div className={styles.inRow}>
+                  <div className={styles.rowName}>
+                    姓名：
+                  </div>
+                  <div className = {styles.rowValue}>
+                    {/* {modalDetailValue.name} */} 名字
+                  </div>
                 </div>
-                <div className = {styles.detailValue}>
-                  {modalDetailValue.name}
+                <div className={styles.inRow}>
+                  <div className={styles.rowName}>
+                    性别：
+                  </div>
+                  <div className = {styles.rowValue}>
+                    {modalDetailValue.sex === 'male'? '男':'女'}
+                  </div>                  
+                </div>
+              </div>
+
+              <div className={styles.outRow}>
+                <div className={styles.inRow}>
+                  <div className={styles.rowName}>
+                    出生日期：
+                  </div>
+                  <div className = {styles.rowValue}>
+                    {modalDetailValue.birthday}
+                  </div>
+                </div>
+                <div className={styles.inRow}>
+                  <div className={styles.rowName}>
+                    年龄：
+                  </div>
+                  <div className = {styles.rowValue}>
+                    {modalDetailValue.age}
+                  </div>    
                 </div>
               </div>
             </div >
-            <div className={styles.modalInput}>
-              <div className={styles.detailName}>
-                性别：
-              </div>
-              <div className = {styles.detailValue}>
-                {modalDetailValue.sex === 'male'? '男':'女'}
-              </div>
-            </div>
-            <div className={styles.modalInput}>
-              <div className={styles.detailName}>
-                出生日期：
-              </div>
-              <div className = {styles.detailValue}>
-                {modalDetailValue.birthday}
-              </div>
-            </div>
-            <div className={styles.modalInput}>
-              <div className={styles.detailName}>
-                年龄：
-              </div>
-              <div className = {styles.detailValue}>
-                {modalDetailValue.age}
-              </div>            
-            </div>
           </div>
-          <div className = {styles.familyDetail}>
+
+          <div className = {styles.familyTitle}>
+            <div className = {styles.colorBlock2}>
+            </div>
+            <div className = {styles.textBlock}>
+              基本信息
+            </div>         
           </div>
         </div>
       </Drawer>
