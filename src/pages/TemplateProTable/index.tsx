@@ -407,8 +407,8 @@ export default () => {
         scroll={{x:'max-content'}}
         defaultSize="small"
       />
-      <DetailModal />
-      {/* <DetailDrawer /> */}
+      {/* <DetailModal /> */}
+      <DetailDrawer />
     </div>
   );
 };

@@ -38,6 +38,8 @@ export default () => {
     sex: undefined,
   })
 
+  const [isDrawerDetailOpen, setDrawerDetailOpen] = useState(false);
+
   return {
     data,
     setData,
@@ -55,5 +57,7 @@ export default () => {
     setIsModalDetailOpen,
     modalDetailValue,
     setModalDetailValue,
+    isDrawerDetailOpen, 
+    setDrawerDetailOpen,
   };
 };

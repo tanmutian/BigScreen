@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
-import { Button, message, Popconfirm, Space, Upload, Input, Select, DatePicker, ConfigProvider, InputNumber } from 'antd';
+import { Button, message, Popconfirm, Space, Upload, Input, Select, DatePicker, ConfigProvider, InputNumber, Drawer } from 'antd';
 import { Divider, Radio, Table, Pagination, Modal } from 'antd';
 import type { TableColumnsType, TableProps, } from 'antd';
 import {DownloadOutlined,PlusOutlined,UploadOutlined,} from '@ant-design/icons';
@@ -43,6 +43,8 @@ export default () => {
     setIsModalDetailOpen,
     modalDetailValue,
     setModalDetailValue,
+    isDrawerDetailOpen, 
+    setDrawerDetailOpen,
   } = useModel('ProTable.model');
 
   const handleChange = (value: string) => {
@@ -180,8 +182,11 @@ export default () => {
   },[setIsModalDetailOpen, setModalDetailValue])
 
   const handleDetailCancel = () => {
+    console.log("asdfasdfaswdfasdfasdfa")
     setIsModalDetailOpen(false);
+
   };
+
 
 
   const columns: TableColumnsType<any> = [
@@ -550,7 +555,8 @@ export default () => {
 
       <Modal
         title="详情"
-        open={isModalDetailOpen}
+        // open={isModalDetailOpen}
+        open={false}
         footer = {false}
         onCancel={handleDetailCancel}
       >
@@ -589,6 +595,61 @@ export default () => {
           </div>
         </div>
       </Modal>        
+
+      <Drawer
+        title="Basic Drawer"
+        // open={isModalDetailOpen}
+        open = {true}
+        onClose={handleDetailCancel}
+      >
+        <div className = {styles.drawerGlobal}>
+          <div className = {styles.basicDetail}>
+            <div className = {styles.basicTitle}>
+              <div className = {styles.colorBlock}>
+              </div>
+              <div className = {styles.textBlock}>
+                基本信息
+              </div>              
+            </div>
+            <div className = {styles.basicValue}>
+              <div className={styles.firstRow}>
+                <div className={styles.rowName}>
+                  姓名：
+                </div>
+                <div className = {styles.detailValue}>
+                  {modalDetailValue.name}
+                </div>
+              </div>
+            </div >
+            <div className={styles.modalInput}>
+              <div className={styles.detailName}>
+                性别：
+              </div>
+              <div className = {styles.detailValue}>
+                {modalDetailValue.sex === 'male'? '男':'女'}
+              </div>
+            </div>
+            <div className={styles.modalInput}>
+              <div className={styles.detailName}>
+                出生日期：
+              </div>
+              <div className = {styles.detailValue}>
+                {modalDetailValue.birthday}
+              </div>
+            </div>
+            <div className={styles.modalInput}>
+              <div className={styles.detailName}>
+                年龄：
+              </div>
+              <div className = {styles.detailValue}>
+                {modalDetailValue.age}
+              </div>            
+            </div>
+          </div>
+          <div className = {styles.familyDetail}>
+          </div>
+        </div>
+      </Drawer>
     </div>
   );
 };
