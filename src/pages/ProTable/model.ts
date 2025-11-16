@@ -29,6 +29,15 @@ export default () => {
     sex: undefined,
   })
 
+  const [isModalDetailOpen, setIsModalDetailOpen] = useState(false);
+
+  const [modalDetailValue, setModalDetailValue] = useState<any>({
+    name: undefined,
+    age: undefined,
+    birthday: undefined,
+    sex: undefined,
+  })
+
   return {
     data,
     setData,
@@ -42,5 +51,9 @@ export default () => {
     setIsModalEditOpen,
     modalEditValue, 
     setModalEditValue,
+    isModalDetailOpen, 
+    setIsModalDetailOpen,
+    modalDetailValue,
+    setModalDetailValue,
   };
 };

@@ -39,6 +39,10 @@ export default () => {
     setIsModalEditOpen,
     modalEditValue, 
     setModalEditValue,
+    isModalDetailOpen, 
+    setIsModalDetailOpen,
+    modalDetailValue,
+    setModalDetailValue,
   } = useModel('ProTable.model');
 
   const handleChange = (value: string) => {
@@ -167,6 +171,19 @@ export default () => {
     })
   },[setModalEditValue])
 
+  const detailValue = useCallback((record) => {
+    setIsModalDetailOpen(true)
+    setModalDetailValue({
+      ...record,
+      birthday: dayjs(record.birthday).format('YYYY-MM-DD HH:mm:ss')
+    })
+  },[setIsModalDetailOpen, setModalDetailValue])
+
+  const handleDetailCancel = () => {
+    setIsModalDetailOpen(false);
+  };
+
+
   const columns: TableColumnsType<any> = [
     {
       title: '序号',
@@ -179,6 +196,9 @@ export default () => {
     {
       title: '性别',
       dataIndex: 'sex',
+      render:(_,record) =>(
+        <div> {record.sex === 'male'? '男':'女'} </div>
+      ),
     },
     {
       title: '出生日期',
@@ -196,7 +216,9 @@ export default () => {
           <div className = {styles.tableText1} onClick = {()=>editValue(record)}>
             编辑
           </div>
-          <div className = {styles.tableText1}>详情</div>
+          <div className = {styles.tableText1} onClick = {()=>detailValue(record)}>
+            详情
+          </div>
           <Popconfirm
             title="删除数据"
             description="确定要删除这条数据吗？"
@@ -524,7 +546,49 @@ export default () => {
             />
           </div>
         </div>
-      </Modal>      
+      </Modal>
+
+      <Modal
+        title="详情"
+        open={isModalDetailOpen}
+        footer = {false}
+        onCancel={handleDetailCancel}
+      >
+        <div className={styles.newAddition}>
+          <div className={styles.modalInput}>
+            <div className={styles.detailName}>
+              姓名：
+            </div>
+            <div className = {styles.detailValue}>
+              {modalDetailValue.name}
+            </div>
+          </div >
+          <div className={styles.modalInput}>
+            <div className={styles.detailName}>
+              性别：
+            </div>
+            <div className = {styles.detailValue}>
+              {modalDetailValue.sex === 'male'? '男':'女'}
+            </div>
+          </div>
+          <div className={styles.modalInput}>
+            <div className={styles.detailName}>
+              出生日期：
+            </div>
+            <div className = {styles.detailValue}>
+              {modalDetailValue.birthday}
+            </div>
+          </div>
+          <div className={styles.modalInput}>
+            <div className={styles.detailName}>
+              年龄：
+            </div>
+            <div className = {styles.detailValue}>
+              {modalDetailValue.age}
+            </div>
+          </div>
+        </div>
+      </Modal>        
     </div>
   );
 };
