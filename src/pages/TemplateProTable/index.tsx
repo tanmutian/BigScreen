@@ -26,23 +26,23 @@ export default () => {
     searchSorter, setSearchSorter
   } = useModel('TemplateProTable.model');
 
-  const onClickDetail=useCallback((params)=>{
-    setDetail((prev)=>{
-      return {
-        ...prev,
-        visible:true,
-        ...params
-      }
-    });
-  },[setDetail])
-
   // const onClickDetail=useCallback((params)=>{
-  //   const urlParams={
-  //     status:params?.status,
-  //     id:params?.record?.id,
-  //   }
-  //   history.push(`/templateProTableDetailPage?${encodeURIParams(urlParams)}`);
-  // },[])
+  //   setDetail((prev)=>{
+  //     return {
+  //       ...prev,
+  //       visible:true,
+  //       ...params
+  //     }
+  //   });
+  // },[setDetail])
+
+  const onClickDetail=useCallback((params)=>{
+    const urlParams={
+      status:params?.status,
+      id:params?.record?.id,
+    }
+    history.push(`/templateProTableDetailPage?${encodeURIParams(urlParams)}`);
+  },[])
 
   const filterUnSelectedRowKeysAndSet = useCallback((unSelectedRowKeys) => {
     const newSelectedRowKeys = cloneDeep(selectedRowKeys);
@@ -408,7 +408,7 @@ export default () => {
         defaultSize="small"
       />
       {/* <DetailModal /> */}
-      <DetailDrawer />
+      {/* <DetailDrawer /> */}
     </div>
   );
 };
