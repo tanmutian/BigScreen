@@ -174,12 +174,20 @@ export default () => {
   },[setModalEditValue])
 
   const detailValue = useCallback((record) => {
-    setIsModalDetailOpen(true)
-    setModalDetailValue({
-      ...record,
-      birthday: dayjs(record.birthday).format('YYYY-MM-DD HH:mm:ss')
-    })
-    console.log(record)
+    // setIsModalDetailOpen(true)
+    // setModalDetailValue({
+    //   ...record,
+    //   birthday: dayjs(record.birthday).format('YYYY-MM-DD HH:mm:ss')
+    // })
+    // console.log(record)
+    const urlParams = {
+      status:"look", 
+      id:record.id,
+    }
+    history.push(`/proTableDetailPage?${encodeURIParams(urlParams)}`)
+
+    //下次讲URL参数
+
   },[setIsModalDetailOpen, setModalDetailValue])
 
   const handleDetailCancel = () => {

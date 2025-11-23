@@ -68,6 +68,12 @@ export const routes = [
     layout: false,
   },
   {
+    name: '后台管理系统项目具体信息',
+    path: '/proTableDetailPage',
+    component: './ProTableDetailPage',
+    layout: false,
+  },
+  {
     name:'flex布局练习',
     path: '/flexTemplate',
     component: './FlexTemplate',
