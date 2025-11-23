@@ -155,7 +155,7 @@ export default () => {
     })
   },[setModalEditValue])
 
-    const onChangeEditModalDate = useCallback((value) => {
+  const onChangeEditModalDate = useCallback((value) => {
     setModalEditValue((prev) => {
       return {
         ...prev,
@@ -242,6 +242,29 @@ export default () => {
     },
   ];
 
+  const familyMembers: TableColumnsType<any>= [
+    {
+      title: '成员姓名',
+      dataIndex: 'memberName',
+      key: 'memberName',
+    },
+    {
+      title: '成员性别',
+      dataIndex: 'memberSex',
+      key: 'memberSex',
+    },
+    {
+      title: '成员出生日期',
+      dataIndex: 'memberBirthday',
+      key: 'memberBirthday',
+    },
+    {
+      title: '年龄',
+      dataIndex: 'memberAge',
+      key: 'memberAge',
+    },
+  ];
+  
 
 
   const showModaladd = () => {
@@ -598,14 +621,13 @@ export default () => {
 
       <Drawer
         title="详情"
-        // open={isModalDetailOpen}
-        open = {true}
+        open={isModalDetailOpen}
+        // open = {true}
         onClose={handleDetailCancel}
         size = {'large'}
       >
         <div className = {styles.drawerGlobal}>
           <div className = {styles.basicDetail}>
-
             <div className = {styles.basicTitle}>
               <div className = {styles.colorBlock1}>
               </div>
@@ -621,7 +643,7 @@ export default () => {
                     姓名：
                   </div>
                   <div className = {styles.rowValue}>
-                    {/* {modalDetailValue.name} */} 名字
+                    {modalDetailValue.name} 
                   </div>
                 </div>
                 <div className={styles.inRow}>
@@ -654,13 +676,19 @@ export default () => {
               </div>
             </div >
           </div>
-
-          <div className = {styles.familyTitle}>
-            <div className = {styles.colorBlock2}>
+          
+          <div className={styles.familyDetail}>
+            <div className = {styles.familyTitle}>
+              <div className = {styles.colorBlock2}>
+              </div>
+              <div className = {styles.textBlock}>
+                家庭成员
+              </div>              
             </div>
-            <div className = {styles.textBlock}>
-              基本信息
-            </div>         
+
+            <div className={styles.drawerTable}>
+              <Table  columns={familyMembers} />  
+            </div>
           </div>
         </div>
       </Drawer>
