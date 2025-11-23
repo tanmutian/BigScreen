@@ -21,7 +21,7 @@ let data =new Array(60).fill(0).map((item,index) => {
       return {
         id : String(Math.random()),
         memberName: `刘德华家人${memberIndex}`,
-        memberSex: String(random(0,1)),
+        memberSex: sexAll[random(0,1)],
         memberBirthTime: dayjs().format('YYYY-MM-DD HH:mm:ss'),
         memberAge: random(0,100),
       }

@@ -2,7 +2,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { Button, message, Popconfirm, Space, Upload, Input, Select, DatePicker, ConfigProvider, InputNumber, Drawer } from 'antd';
 import { Divider, Radio, Table, Pagination, Modal } from 'antd';
 import type { TableColumnsType, TableProps, } from 'antd';
-import {DownloadOutlined,PlusOutlined,UploadOutlined,} from '@ant-design/icons';
+import {DownloadOutlined,PlusOutlined,UploadOutlined,CloseOutlined} from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProTable } from '@ant-design/pro-components';
 import { history, useModel } from '@umijs/max';
@@ -179,10 +179,11 @@ export default () => {
       ...record,
       birthday: dayjs(record.birthday).format('YYYY-MM-DD HH:mm:ss')
     })
+    console.log(record)
   },[setIsModalDetailOpen, setModalDetailValue])
 
   const handleDetailCancel = () => {
-    console.log("asdfasdfaswdfasdfasdfa")
+    //console.log("asdfasdfaswdfasdfasdfa")
     setIsModalDetailOpen(false);
 
   };
@@ -252,11 +253,14 @@ export default () => {
       title: '成员性别',
       dataIndex: 'memberSex',
       key: 'memberSex',
+      render:(_,record) => (
+        <div>{record.memberSex === 'male'? '男':'女'}</div>
+      )
     },
     {
       title: '成员出生日期',
-      dataIndex: 'memberBirthday',
-      key: 'memberBirthday',
+      dataIndex: 'memberBirthTime',
+      key: 'memberBirthTime',
     },
     {
       title: '年龄',
@@ -620,13 +624,20 @@ export default () => {
       </Modal>        
 
       <Drawer
-        title="详情"
         open={isModalDetailOpen}
         // open = {true}
         onClose={handleDetailCancel}
         size = {'large'}
+        closable = {false}
       >
         <div className = {styles.drawerGlobal}>
+          <div className={styles.globalTitle}>
+            <div className={styles.titleValue}>
+              详情
+            </div>
+            <CloseOutlined className={styles.closeIcon} onClick={handleDetailCancel}/>
+          </div>
+
           <div className = {styles.basicDetail}>
             <div className = {styles.basicTitle}>
               <div className = {styles.colorBlock1}>
@@ -679,7 +690,7 @@ export default () => {
           
           <div className={styles.familyDetail}>
             <div className = {styles.familyTitle}>
-              <div className = {styles.colorBlock2}>
+              <div className = {styles.colorBlock1}>
               </div>
               <div className = {styles.textBlock}>
                 家庭成员
@@ -687,7 +698,7 @@ export default () => {
             </div>
 
             <div className={styles.drawerTable}>
-              <Table  columns={familyMembers} />  
+              <Table  dataSource={modalDetailValue.member} columns={familyMembers} pagination={false} />  
             </div>
           </div>
         </div>
