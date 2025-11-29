@@ -73,3 +73,18 @@ export async function templateDeleteApi(
     ...(options || {}),
   });
 }
+
+export async function getIdApi(
+  params: any,
+  options?: { [key: string]: any },
+) {
+  return request<any>('/api/v1/proTable/getDetailById', {
+    method: 'GET',
+    headers: {
+      'Content-Type': 'application/json',
+      'Authorization': `${localStorage.getItem('token')}` || '',
+    },
+    params,
+    ...(options || {}),
+  });
+}

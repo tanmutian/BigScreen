@@ -153,6 +153,22 @@ export default {
       success: true,
     })
   },
+  'GET /api/v1/proTable/getDetailById': (req:any, res: any) => {
+    const {id} = req.query
+    let thisData
+    for(let i=0; i<data.length; i++){
+      if(data[i].id === id){
+        thisData = data[i]
+        break
+      }
+    }
+    res.json({
+      data:thisData,
+      msg:'请求成功',
+      code:200,
+      success: true,
+    })
+  }
 };
 
 
