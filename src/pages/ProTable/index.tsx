@@ -174,17 +174,17 @@ export default () => {
   },[setModalEditValue])
 
   const detailValue = useCallback((record) => {
-    // setIsModalDetailOpen(true)
-    // setModalDetailValue({
-    //   ...record,
-    //   birthday: dayjs(record.birthday).format('YYYY-MM-DD HH:mm:ss')
-    // })
-    // console.log(record)
-    const urlParams = {
-      status:"look", 
-      id:record.id,
-    }
-    history.push(`/proTableDetailPage?${encodeURIParams(urlParams)}`)
+    setIsModalDetailOpen(true)
+    setModalDetailValue({
+      ...record,
+      birthday: dayjs(record.birthday).format('YYYY-MM-DD HH:mm:ss')
+    })
+    console.log(record)
+    // const urlParams = {
+    //   status:"look", 
+    //   id:record.id,
+    // }
+    // history.push(`/proTableDetailPage?${encodeURIParams(urlParams)}`)
 
     //下次讲URL参数
 
@@ -588,52 +588,13 @@ export default () => {
         </div>
       </Modal>
 
-      <Modal
-        title="详情"
-        // open={isModalDetailOpen}
-        open={false}
-        footer = {false}
-        onCancel={handleDetailCancel}
-      >
-        <div className={styles.newAddition}>
-          <div className={styles.modalInput}>
-            <div className={styles.detailName}>
-              姓名：
-            </div>
-            <div className = {styles.detailValue}>
-              {modalDetailValue.name}
-            </div>
-          </div >
-          <div className={styles.modalInput}>
-            <div className={styles.detailName}>
-              性别：
-            </div>
-            <div className = {styles.detailValue}>
-              {modalDetailValue.sex === 'male'? '男':'女'}
-            </div>
-          </div>
-          <div className={styles.modalInput}>
-            <div className={styles.detailName}>
-              出生日期：
-            </div>
-            <div className = {styles.detailValue}>
-              {modalDetailValue.birthday}
-            </div>
-          </div>
-          <div className={styles.modalInput}>
-            <div className={styles.detailName}>
-              年龄：
-            </div>
-            <div className = {styles.detailValue}>
-              {modalDetailValue.age}
-            </div>
-          </div>
-        </div>
-      </Modal>        
+      <DetailModal>
+      </DetailModal>
+      
 
       <Drawer
-        open={isModalDetailOpen}
-        // open = {true}
+        // open={isModalDetailOpen}
+        open = {false}
         onClose={handleDetailCancel}
         size = {'large'}
         closable = {false}
