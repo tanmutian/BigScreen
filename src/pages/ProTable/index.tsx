@@ -138,9 +138,6 @@ export default () => {
 
   },[setIsModalDetailOpen, setModalDetailValue])
 
-
-
-
   const columns: TableColumnsType<any> = [
     {
       title: '序号',
@@ -194,8 +191,6 @@ export default () => {
     },
   ];
 
-  
-
 
   const showModaladd = () => {
     setIsModalAddOpen(true);
@@ -206,10 +201,6 @@ export default () => {
       sex: undefined,
     })
   };
-
-
-
-
 
   const [selectionType, setSelectionType] = useState<'checkbox' | 'radio'>('checkbox');
   

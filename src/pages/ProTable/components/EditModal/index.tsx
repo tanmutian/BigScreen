@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useModel } from '@umijs/max';
-import { message, Modal,Input, Select, DatePicker, InputNumber} from 'antd';
+import { message, Modal,Input, Select, DatePicker, InputNumber, FormProps, Form, Button, Space} from 'antd';
 import {CloseOutlined} from '@ant-design/icons';
 import type { ProColumns } from '@ant-design/pro-components';
 import { ProForm, EditableProTable, ProFormDateTimePicker, ProFormDigit, ProFormRadio, ProFormSelect, ProFormText } from '@ant-design/pro-components';
@@ -36,117 +36,123 @@ export default (props) => {
     setDrawerDetailOpen,
   } = useModel('ProTable.model');
 
-
-  const onChangeEditModalAge = useCallback((value) => {
-    setModalEditValue((prev) => {
-      return {
-        ...prev,
-        age:value
-      }
-    })
-  },[setModalEditValue])
-
-  const handleEditOk = async() => {
-    const response = await editApi({
-      ...modalEditValue,
-      birthday: dayjs(modalEditValue.birthday).format('YYYY-MM-DD HH:mm:ss')
-    })
-    console.log(modalEditValue)
-    setIsModalEditOpen(false);
-    searching()
-  };
-
   const handleEditCancel = () => {
     setIsModalEditOpen(false);
   };
 
-  const onChangeEditModalName = useCallback((e) => {
-    setModalEditValue((prev) => {
-      return {
-        ...prev,
-        name:e.target.value
-      }
-    })
-  },[setModalEditValue])
+  const onFinish: FormProps<any>['onFinish'] = async(values) => {
+    console.log('Success:', values);
+    const response = await editApi({
+        id:modalEditValue.id,
+        ...values,
+        birthday: dayjs(values.birthday).format('YYYY-MM-DD HH:mm:ss')
+      })
+      console.log(modalEditValue)
+      setIsModalEditOpen(false);
+      searching()
+  };
 
-  const onChangeEditModalSex = useCallback((value) => {
-    setModalEditValue((prev) => {
-      return {
-        ...prev,
-        sex:value
-      }
-    })
-  },[setModalEditValue])
+  const onFinishFailed: FormProps<any>['onFinishFailed'] = (errorInfo) => {
+    console.log('Failed:', errorInfo);
+  };
 
-  const onChangeEditModalDate = useCallback((value) => {
-    setModalEditValue((prev) => {
-      return {
-        ...prev,
-        birthday:value
-      }
-    })
-  },[setModalEditValue])
+  const [form] = Form.useForm();
+
+  useEffect(()=>{
+    if(isModalEditOpen){
+      form.setFieldsValue({...modalEditValue });
+    }
+  },[form, isModalEditOpen, modalEditValue])
 
   return (
   <Modal
     title="编辑"
     open={isModalEditOpen}
-    onOk={handleEditOk}
-    
-    onCancel={handleEditCancel}
+    footer = {null}
   >
-    <div className={styles.newAddition}>
-      <div className={styles.modalInput}>
-        <div className={styles.addName}>
-          姓名：
+    <Form
+      name="basic"
+      form={form}
+      labelCol={{ span: 4 }}
+      wrapperCol={{ span: 20 }}
+      initialValues={{ remember: true }}
+      onFinish={onFinish}
+      onFinishFailed={onFinishFailed}
+      autoComplete="off"
+    >
+      <div className={styles.newAddition}>
+        <div className={styles.modalInput}>
+          <Form.Item<any>
+            label="姓名"
+            name="name"
+            rules={[{ required: true, message: 'Please input your username!' }]}
+          >
+            <Input 
+              placeholder="请输入" 
+              className={styles.addInput}
+            />
+          </Form.Item>
         </div>
-        <Input 
-          placeholder="请输入" 
-          value = {modalEditValue.name} 
-          onChange={onChangeEditModalName} 
-          className={styles.addInput}
-        />
-      </div>
-      <div className={styles.modalInput}>
-        <div className={styles.addName}>
-          性别：
+        <div className={styles.modalInput}>
+          <Form.Item<any>
+            label="性别"
+            name="sex"
+            rules={[{ required: true, message: 'Please input your username!' }]}
+          >
+            <Select
+              placeholder = "请选择"
+              style={{ width: "100%" }}
+              options={[
+                { value: 'male', label: '男' },
+                { value: 'female', label: '女' },
+              ]}
+              className = {styles.addInput}
+            />
+          </Form.Item>
+
         </div>
-        <Select
-          placeholder = "请选择"
-          style={{ width: "100%" }}
-          options={[
-            { value: 'male', label: '男' },
-            { value: 'female', label: '女' },
-          ]}
-          value = {modalEditValue.sex}
-          onChange = {onChangeEditModalSex}
-          className = {styles.addInput}
-        />
-      </div>
-      <div className={styles.modalInput}>
-        <div className={styles.addName}>
-          出生日期：
+        <div className={styles.modalInput}>
+          <Form.Item<any>
+            label="出生日期"
+            name="birthday"
+            rules={[{ required: true, message: 'Please input your username!' }]}
+          >
+            <DatePicker
+              showTime
+              className = {styles.addInput}
+            />
+          </Form.Item>
+
         </div>
-        <DatePicker
-          showTime
-          onChange={onChangeEditModalDate}
-          className = {styles.addInput}
-          value = {modalEditValue.birthday}
-        />
-      </div>
-      <div className={styles.modalInput}>
-        <div className={styles.addName}>
-          年龄：
+        <div className={styles.modalInput}>
+          <Form.Item<any>
+            label="年龄"
+            name="age"
+            rules={[{ required: true, message: 'Please input your username!' }]}
+          >
+            <InputNumber 
+              placeholder='请输入' 
+              className = {styles.addInput} 
+            />
+          </Form.Item>
         </div>
-        <InputNumber 
-          placeholder='请输入' 
-          onChange={onChangeEditModalAge} 
-          value = {modalEditValue.age} 
-          style={{ width: "50%" }}
-          className = {styles.addInput} 
-        />
+        <div className={styles.modalInput}>
+          <Form.Item<any>
+            label=""
+          >
+          <Space>
+            <Button type="primary" htmlType="submit">
+              提交
+            </Button>
+            <Button htmlType="button" onClick={handleEditCancel}>
+              取消
+            </Button>
+          </Space>
+          </Form.Item>
+        </div>
       </div>
-    </div>
+    </Form>
+
   </Modal>
   );
 };
