@@ -40,6 +40,8 @@ export default () => {
 
   const [isDrawerDetailOpen, setDrawerDetailOpen] = useState(false);
 
+  
+
   return {
     data,
     setData,

@@ -12,6 +12,7 @@ import { cloneDeep, debounce } from 'lodash';
 import { proTableListApi, addApi, deleteApi, editApi,templateDeleteApi, templateExportApi, templateListApi } from './api';
 import DetailModal from './components/DetailModal';
 import DetailDrawer from './components/DetailDrawer';
+import EditModal from './components/EditModal';
 import styles from './index.less';
 import locale from 'antd/locale/zh_CN';
 import dayjs from 'dayjs';
@@ -119,60 +120,6 @@ export default () => {
   },[setIsModalEditOpen, setModalEditValue])
 
 
-  const onOk = (value: any) => {
-    console.log('onOk: ', value);
-  };
-
-  const handleEditOk = async() => {
-    const response = await editApi({
-      ...modalEditValue,
-      birthday: dayjs(modalEditValue.birthday).format('YYYY-MM-DD HH:mm:ss')
-    })
-    console.log(modalEditValue)
-    setIsModalEditOpen(false);
-    searching()
-  };
-
-  const handleEditCancel = () => {
-    setIsModalEditOpen(false);
-  };
-
-  const onChangeEditModalName = useCallback((e) => {
-    setModalEditValue((prev) => {
-      return {
-        ...prev,
-        name:e.target.value
-      }
-    })
-  },[setModalEditValue])
-
-  const onChangeEditModalSex = useCallback((value) => {
-    setModalEditValue((prev) => {
-      return {
-        ...prev,
-        sex:value
-      }
-    })
-  },[setModalEditValue])
-
-  const onChangeEditModalDate = useCallback((value) => {
-    setModalEditValue((prev) => {
-      return {
-        ...prev,
-        birthday:value
-      }
-    })
-  },[setModalEditValue])
-
-  const onChangeEditModalAge = useCallback((value) => {
-    setModalEditValue((prev) => {
-      return {
-        ...prev,
-        age:value
-      }
-    })
-  },[setModalEditValue])
-
   const detailValue = useCallback((record) => {
     setIsModalDetailOpen(true)
     setModalDetailValue({
@@ -190,11 +137,6 @@ export default () => {
 
   },[setIsModalDetailOpen, setModalDetailValue])
 
-  const handleDetailCancel = () => {
-    //console.log("asdfasdfaswdfasdfasdfa")
-    setIsModalDetailOpen(false);
-
-  };
 
 
 
@@ -251,31 +193,6 @@ export default () => {
     },
   ];
 
-  const familyMembers: TableColumnsType<any>= [
-    {
-      title: '成员姓名',
-      dataIndex: 'memberName',
-      key: 'memberName',
-    },
-    {
-      title: '成员性别',
-      dataIndex: 'memberSex',
-      key: 'memberSex',
-      render:(_,record) => (
-        <div>{record.memberSex === 'male'? '男':'女'}</div>
-      )
-    },
-    {
-      title: '成员出生日期',
-      dataIndex: 'memberBirthTime',
-      key: 'memberBirthTime',
-    },
-    {
-      title: '年龄',
-      dataIndex: 'memberAge',
-      key: 'memberAge',
-    },
-  ];
   
 
 
@@ -476,7 +393,6 @@ export default () => {
               <DatePicker
                 showTime
                 onChange={onChangeAddModalDate}
-                onOk={onOk}
                 className = {styles.addInput}
                 value = {modalAddValue.birthday}
               />
@@ -525,153 +441,18 @@ export default () => {
         </div>
 
       </div>
-
-      <Modal
-        title="编辑"
-        open={isModalEditOpen}
-        onOk={handleEditOk}
-        
-        onCancel={handleEditCancel}
-      >
-        <div className={styles.newAddition}>
-          <div className={styles.modalInput}>
-            <div className={styles.addName}>
-              姓名：
-            </div>
-            <Input 
-              placeholder="请输入" 
-              value = {modalEditValue.name} 
-              onChange={onChangeEditModalName} 
-              className={styles.addInput}
-            />
-          </div>
-          <div className={styles.modalInput}>
-            <div className={styles.addName}>
-              性别：
-            </div>
-            <Select
-              placeholder = "请选择"
-              style={{ width: "100%" }}
-              options={[
-                { value: 'male', label: '男' },
-                { value: 'female', label: '女' },
-              ]}
-              value = {modalEditValue.sex}
-              onChange = {onChangeEditModalSex}
-              className = {styles.addInput}
-            />
-          </div>
-          <div className={styles.modalInput}>
-            <div className={styles.addName}>
-              出生日期：
-            </div>
-            <DatePicker
-              showTime
-              onChange={onChangeEditModalDate}
-              onOk={onOk}
-              className = {styles.addInput}
-              value = {modalEditValue.birthday}
-            />
-          </div>
-          <div className={styles.modalInput}>
-            <div className={styles.addName}>
-              年龄：
-            </div>
-            <InputNumber 
-              placeholder='请输入' 
-              onChange={onChangeEditModalAge} 
-              value = {modalEditValue.age} 
-              style={{ width: "50%" }}
-              className = {styles.addInput} 
-            />
-          </div>
-        </div>
-      </Modal>
-
-      <DetailModal>
-      </DetailModal>
       
-
-      <Drawer
-        // open={isModalDetailOpen}
-        open = {false}
-        onClose={handleDetailCancel}
-        size = {'large'}
-        closable = {false}
+      <EditModal
+        searching = {searching}
       >
-        <div className = {styles.drawerGlobal}>
-          <div className={styles.globalTitle}>
-            <div className={styles.titleValue}>
-              详情
-            </div>
-            <CloseOutlined className={styles.closeIcon} onClick={handleDetailCancel}/>
-          </div>
+      </EditModal>
 
-          <div className = {styles.basicDetail}>
-            <div className = {styles.basicTitle}>
-              <div className = {styles.colorBlock1}>
-              </div>
-              <div className = {styles.textBlock}>
-                基本信息
-              </div>              
-            </div>
+      {/* <DetailModal>
+      </DetailModal> */}
+      
+      <DetailDrawer>
+      </DetailDrawer>
 
-            <div className = {styles.basicValue}>
-              <div className={styles.outRow}>
-                <div className={styles.inRow}>
-                  <div className={styles.rowName}>
-                    姓名：
-                  </div>
-                  <div className = {styles.rowValue}>
-                    {modalDetailValue.name} 
-                  </div>
-                </div>
-                <div className={styles.inRow}>
-                  <div className={styles.rowName}>
-                    性别：
-                  </div>
-                  <div className = {styles.rowValue}>
-                    {modalDetailValue.sex === 'male'? '男':'女'}
-                  </div>                  
-                </div>
-              </div>
-
-              <div className={styles.outRow}>
-                <div className={styles.inRow}>
-                  <div className={styles.rowName}>
-                    出生日期：
-                  </div>
-                  <div className = {styles.rowValue}>
-                    {modalDetailValue.birthday}
-                  </div>
-                </div>
-                <div className={styles.inRow}>
-                  <div className={styles.rowName}>
-                    年龄：
-                  </div>
-                  <div className = {styles.rowValue}>
-                    {modalDetailValue.age}
-                  </div>    
-                </div>
-              </div>
-            </div >
-          </div>
-          
-          <div className={styles.familyDetail}>
-            <div className = {styles.familyTitle}>
-              <div className = {styles.colorBlock1}>
-              </div>
-              <div className = {styles.textBlock}>
-                家庭成员
-              </div>              
-            </div>
-
-            <div className={styles.drawerTable}>
-              <Table  dataSource={modalDetailValue.member} columns={familyMembers} pagination={false} />  
-            </div>
-          </div>
-        </div>
-      </Drawer>
     </div>
   );
 };
