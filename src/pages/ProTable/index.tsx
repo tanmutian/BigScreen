@@ -13,6 +13,7 @@ import { proTableListApi, addApi, deleteApi, editApi,templateDeleteApi, template
 import DetailModal from './components/DetailModal';
 import DetailDrawer from './components/DetailDrawer';
 import EditModal from './components/EditModal';
+import NewModal from './components/NewModal';
 import styles from './index.less';
 import locale from 'antd/locale/zh_CN';
 import dayjs from 'dayjs';
@@ -206,19 +207,8 @@ export default () => {
     })
   };
 
-  const handleAddOk = async() => {
-    console.log(modalAddValue)
-    const response = await addApi({
-      ...modalAddValue,
-      birthday: dayjs(modalAddValue.birthday).format('YYYY-MM-DD HH:mm:ss')
-    })
-    setIsModalAddOpen(false);
-    searching()
-  };
 
-  const handleAddCancel = () => {
-    setIsModalAddOpen(false);
-  };
+
 
 
   const [selectionType, setSelectionType] = useState<'checkbox' | 'radio'>('checkbox');
@@ -247,43 +237,6 @@ export default () => {
     setPagination(response.pagination)
   },[ageEnd, ageStart, date, name, setData, setPagination, sex])
 
-
-
-  const onChangeAddModalName = useCallback((e) => {
-    setModalAddValue((prev) => {
-      return {
-        ...prev,
-        name:e.target.value
-      }
-    })
-  },[setModalAddValue])
-
-  const onChangeAddModalSex = useCallback((value) => {
-    setModalAddValue((prev) => {
-      return {
-        ...prev,
-        sex:value
-      }
-    })
-  },[setModalAddValue])
-
-    const onChangeAddModalDate = useCallback((value) => {
-    setModalAddValue((prev) => {
-      return {
-        ...prev,
-        birthday:value
-      }
-    })
-  },[setModalAddValue])
-
-  const onChangeAddModalAge = useCallback((value) => {
-    setModalAddValue((prev) => {
-      return {
-        ...prev,
-        age:value
-      }
-    })
-  },[setModalAddValue])
 
   useEffect(() => {
     searching()
@@ -350,68 +303,12 @@ export default () => {
         <Button type="primary" icon={<PlusOutlined />} onClick={showModaladd}>
           新增
         </Button>
-        <Modal
-          title="新增"
-          //closable={{ 'aria-label': 'Custom Close Button' }}
-          open={isModalAddOpen}
-          onOk={handleAddOk}
-          
-          onCancel={handleAddCancel}
+        
+        <NewModal
+          searching = {searching}
         >
-          <div className={styles.newAddition}>
-            <div className={styles.modalInput}>
-              <div className={styles.addName}>
-                姓名：
-              </div>
-              <Input 
-                placeholder="请输入" 
-                value = {modalAddValue.name} 
-                onChange={onChangeAddModalName} 
-                className={styles.addInput}
-              />
-            </div>
-            <div className={styles.modalInput}>
-              <div className={styles.addName}>
-                性别：
-              </div>
-              <Select
-                placeholder = "请选择"
-                style={{ width: "100%" }}
-                options={[
-                  { value: 'male', label: '男' },
-                  { value: 'female', label: '女' },
-                ]}
-                value = {modalAddValue.sex}
-                onChange = {onChangeAddModalSex}
-                className = {styles.addInput}
-              />
-            </div>
-            <div className={styles.modalInput}>
-              <div className={styles.addName}>
-                出生日期：
-              </div>
-              <DatePicker
-                showTime
-                onChange={onChangeAddModalDate}
-                className = {styles.addInput}
-                value = {modalAddValue.birthday}
-              />
-            </div>
-            <div className={styles.modalInput}>
-              <div className={styles.addName}>
-                年龄：
-              </div>
-              <InputNumber 
-                placeholder='请输入' 
-                onChange={onChangeAddModalAge} 
-                value = {modalAddValue.age} 
-                style={{ width: "50%" }}
-                className = {styles.addInput} 
-              />
-            </div>
-          </div>
+        </NewModal>
 
-        </Modal>
         <Button icon={<UploadOutlined />}>
           导入
         </Button>
